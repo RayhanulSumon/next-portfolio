@@ -191,10 +191,6 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Scroll progress bar */}
-        <div className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transition-all duration-300 ${
-          isScrolled ? 'w-full opacity-100' : 'w-0 opacity-0'
-        }`}></div>
 
         {/* Mobile Navigation Menu - Enhanced */}
         <div className={`md:hidden transition-all duration-500 ease-in-out ${
