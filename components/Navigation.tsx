@@ -38,13 +38,13 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${
+      <nav className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'w-full max-w-6xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl shadow-2xl border border-gray-200/60 dark:border-gray-700/60 rounded-2xl' 
-          : 'w-full max-w-7xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-xl border border-gray-200/40 dark:border-gray-700/40 rounded-3xl'
+          ? 'bg-white/98 dark:bg-gray-900/98 backdrop-blur-2xl shadow-2xl border-b border-gray-200/60 dark:border-gray-700/60' 
+          : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-xl border-b border-gray-200/40 dark:border-gray-700/40'
       }`}>
-        <div className="px-6 lg:px-8">
-          <div className="flex justify-between items-center py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
             {/* Logo/Brand - Enhanced */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-3 group">
@@ -136,7 +136,7 @@ export default function Navigation() {
             ? 'max-h-96 opacity-100 transform translate-y-0' 
             : 'max-h-0 opacity-0 overflow-hidden transform -translate-y-4'
         }`}>
-          <div className="px-6 pb-6 bg-gradient-to-b from-white/95 to-gray-50/95 dark:from-gray-900/95 dark:to-gray-800/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-700/60 rounded-b-2xl">
+          <div className="px-6 pb-6 bg-gradient-to-b from-white/95 to-gray-50/95 dark:from-gray-900/95 dark:to-gray-800/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-700/60">
             <div className="space-y-2 pt-4">
               {navigationItems.map((item, index) => {
                 const isActive = pathname === item.href;
