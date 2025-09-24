@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/react';
 import Blog from '../../components/blog/Blog';
-import SwitchDark from '../../components/switch/SwitchDark';
-import Link from 'next/link';
-import { PortfolioProvider } from '../../lib/context/PortfolioContext';
+
+import { PortfolioProvider } from '@/lib/context/PortfolioContext';
 
 export const metadata: Metadata = {
   title: 'Blog - Rayhanul Sumon | Full Stack Developer',
@@ -13,35 +11,6 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <PortfolioProvider>
-      <SwitchDark />
-
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-2xl p-2 shadow-md">
-            <Link href="/" className="px-6 py-3 rounded-xl transition-all duration-300 font-medium text-sm flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400">
-              <span className="text-lg">🏠</span>
-              <span>Home</span>
-            </Link>
-            <Link href="/about" className="px-6 py-3 rounded-xl transition-all duration-300 font-medium text-sm flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400">
-              <span className="text-lg">👨‍💻</span>
-              <span>About</span>
-            </Link>
-            <Link href="/portfolio" className="px-6 py-3 rounded-xl transition-all duration-300 font-medium text-sm flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400">
-              <span className="text-lg">💼</span>
-              <span>Portfolio</span>
-            </Link>
-            <Link href="/blog" className="px-6 py-3 rounded-xl transition-all duration-300 font-medium text-sm flex items-center gap-2 bg-blue-600 text-white shadow-sm">
-              <span className="text-lg">📝</span>
-              <span>Blog</span>
-            </Link>
-            <Link href="/contact" className="px-6 py-3 rounded-xl transition-all duration-300 font-medium text-sm flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400">
-              <span className="text-lg">📧</span>
-              <span>Contact</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
 
       {/* Blog Content */}
       <main className="pt-32">
@@ -60,7 +29,6 @@ export default function BlogPage() {
         </section>
       </main>
 
-      <Analytics />
     </PortfolioProvider>
   );
 }
