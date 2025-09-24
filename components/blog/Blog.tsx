@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { usePortfolio } from '../../lib/context/PortfolioContext';
+import { usePortfolio } from '@/lib/context/PortfolioContext';
 
 interface BlogPost {
   id: number;
