@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Modal from 'react-modal';
-import About from '../about/About';
+import About from '../../app/about/components/About';
 
 interface HeroContent {
   heroImage: string;

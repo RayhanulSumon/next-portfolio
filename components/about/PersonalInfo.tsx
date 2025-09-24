@@ -5,30 +5,37 @@ import React from 'react';
 interface PersonalInfoItem {
   meta: string;
   metaInfo: string;
+  icon: string;
 }
 
 const personalInfoContent: PersonalInfoItem[] = [
-  { meta: 'first name', metaInfo: 'Rayhanul' },
-  { meta: 'last name', metaInfo: 'Sumon' },
-  { meta: 'Nationality', metaInfo: 'Bangladeshi' },
-  { meta: 'Freelance', metaInfo: 'Available' },
-  { meta: 'Address', metaInfo: 'Dhanmondi, Dhaka' },
-  { meta: 'phone', metaInfo: '+8801710138034' },
-  { meta: 'Email', metaInfo: 'rayhanulsumon@gmail.com' },
+  { meta: 'First Name', metaInfo: 'Rayhanul', icon: '👤' },
+  { meta: 'Last Name', metaInfo: 'Sumon', icon: '👤' },
+  { meta: 'Nationality', metaInfo: 'Bangladeshi', icon: '🇧🇩' },
+  { meta: 'Freelance', metaInfo: 'Available', icon: '💼' },
+  { meta: 'Address', metaInfo: 'Dhanmondi, Dhaka', icon: '📍' },
+  { meta: 'Phone', metaInfo: '+8801710138034', icon: '📞' },
+  { meta: 'Email', metaInfo: 'rayhanulsumon@gmail.com', icon: '📧' },
+  { meta: 'Languages', metaInfo: 'Bengali, English', icon: '🌐' },
 ];
 
 const PersonalInfo: React.FC = () => {
   return (
-    <ul className="about-list list-unstyled open-sans-font">
-      {personalInfoContent.map((val, i) => (
-        <li key={i}>
-          <span className="title">{val.meta}: </span>
-          <span className="value d-block d-sm-inline-block d-lg-block d-xl-inline-block">
-            {val.metaInfo}
+    <div className="space-y-4">
+      {personalInfoContent.map((item, index) => (
+        <div key={index} className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-700 last:border-b-0">
+          <div className="flex items-center space-x-3">
+            <span className="text-xl">{item.icon}</span>
+            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              {item.meta}:
+            </span>
+          </div>
+          <span className="text-sm font-semibold text-gray-900 dark:text-white text-right max-w-[60%]">
+            {item.metaInfo}
           </span>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

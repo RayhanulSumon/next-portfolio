@@ -3,7 +3,7 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Hero from './hero/Hero';
-import About from './about/About';
+import About from '../app/about/components/About';
 import Address from './Address';
 import Portfolio from './portfolio/Portfolio';
 import Blog from './blog/Blog';
