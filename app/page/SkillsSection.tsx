@@ -1,8 +1,8 @@
 "use client";
 import { Canvas } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
-import { motion, useAnimation, useInView, useMotionValue, useTransform } from 'framer-motion';
-import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
+import React from 'react';
 import { FaJsSquare, FaReact, FaNodeJs } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiLaravel, SiTailwindcss, SiFigma } from 'react-icons/si';
 
@@ -14,10 +14,7 @@ const gridVariants = {
 		},
 	},
 };
-const cardVariants = {
-	hidden: { opacity: 0, scale: 0.8, y: 20 },
-	visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
+
 
 const Skills3DBackground = React.memo(function Skills3DBackground() {
 	return (

@@ -54,7 +54,7 @@ const Contact: React.FC = () => {
     <form ref={form} onSubmit={sendEmail} className="space-y-6">
       {/* Name Input */}
       <div>
-        <label htmlFor="name" className="block font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
+        <label htmlFor="name" className="font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
           <svg className="w-4 h-4 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
 
       {/* Email Input */}
       <div>
-        <label htmlFor="email" className="block font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
+        <label htmlFor="email" className="font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
           <svg className="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
@@ -90,7 +90,7 @@ const Contact: React.FC = () => {
 
       {/* Subject Input */}
       <div>
-        <label htmlFor="subject" className="block font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
+        <label htmlFor="subject" className="font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
           <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
           </svg>
@@ -108,7 +108,7 @@ const Contact: React.FC = () => {
 
       {/* Message Textarea */}
       <div>
-        <label htmlFor="message" className="block font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
+        <label htmlFor="message" className="font-semibold text-gray-900 dark:text-white mb-3 text-sm flex items-center gap-2">
           <svg className="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
