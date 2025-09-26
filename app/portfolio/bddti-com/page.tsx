@@ -8,8 +8,8 @@ export default function BddtiDetail() {
 					src="/images/portfolio/bddti_light.webp"
 					alt="BDDTI.com Screenshot"
 					width={1200}
-					height={500}
-					className="w-full h-56 md:h-96 object-cover rounded-2xl shadow mb-10 border border-gray-200 dark:border-slate-800"
+					height={400}
+					className="mx-auto w-full max-w-3xl h-40 md:h-64 lg:h-72 object-cover rounded-2xl shadow mb-8 border border-gray-200 dark:border-slate-800"
 					priority
 				/>
 				<h1 className="text-4xl md:text-5xl font-extrabold mb-8 text-center text-gray-900 dark:text-white">
