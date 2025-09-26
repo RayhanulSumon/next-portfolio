@@ -123,7 +123,7 @@ export default function HeroSection() {
   return (
     <motion.section
       id="hero"
-      className="min-h-screen flex items-center bg-gradient-to-br from-white to-blue-100 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
+      className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-white to-blue-100 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
