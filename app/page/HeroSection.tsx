@@ -35,12 +35,16 @@ function Hero3DBackground() {
     useFrame(() => {
       if (ref.current) {
         // Set color based on theme
-        const color = resolvedTheme === 'dark' ? '#0ea5e9' : '#38bdf8';
+        const color = isDark ? '#0ea5e9' : '#0284c7';
+        const opacity = isDark ? 0.7 : 0.85;
         (ref.current.material as DistortMaterial).distort = 0.15 + Math.sin(Date.now() * 0.001) * 0.07;
         // Type guard for color property
         const mat = ref.current.material as MeshStandardMaterial;
         if (mat && mat.color && typeof mat.color.set === 'function') {
           mat.color.set(color);
+        }
+        if ('opacity' in mat) {
+          mat.opacity = opacity;
         }
         const minY = -0.7; // start at bottom of hero
         const maxY = 2.5; // move further down as you scroll (increase for more movement)
@@ -54,7 +58,7 @@ function Hero3DBackground() {
     });
     return (
       <Sphere ref={ref} args={[0.6, 64, 64]} scale={0.9} position={[0.7, yPos.current, 0]}>
-        <MeshDistortMaterial color={resolvedTheme === 'dark' ? '#0ea5e9' : '#38bdf8'} speed={1.2} transparent opacity={0.7} />
+        <MeshDistortMaterial color={isDark ? '#0ea5e9' : '#0284c7'} speed={1.2} transparent opacity={isDark ? 0.7 : 0.85} />
       </Sphere>
     );
   }
@@ -62,11 +66,15 @@ function Hero3DBackground() {
   // Only render Canvas on client
   if (!isClient) return null;
 
+  // Adjust background opacity based on theme
+  const isDark = resolvedTheme === 'dark';
+  const bgOpacity = isDark ? 0.45 : 0.25;
+
   return (
-    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(10px)', opacity: resolvedTheme === 'dark' ? 0.45 : 0.35 }}>
+    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(10px)', opacity: bgOpacity }}>
       <Canvas camera={{ position: [0, 0, 2.5], fov: 50 }} style={{ width: '100%', height: '100%' }}>
-        <ambientLight intensity={resolvedTheme === 'dark' ? 0.7 : 0.5} />
-        <directionalLight position={[2, 2, 2]} intensity={resolvedTheme === 'dark' ? 0.5 : 0.3} />
+        <ambientLight intensity={isDark ? 0.7 : 0.5} />
+        <directionalLight position={[2, 2, 2]} intensity={isDark ? 0.5 : 0.3} />
         <AnimatedSphere />
       </Canvas>
     </div>
