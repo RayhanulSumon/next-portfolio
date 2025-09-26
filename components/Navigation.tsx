@@ -109,45 +109,64 @@ export default function Navigation() {
         </div>
 
 
-        {/* Mobile Navigation Menu - Enhanced */}
-        <div className={`md:hidden transition-all duration-500 ease-in-out ${
+        {/* Mobile Navigation Menu - Dropdown Under Navbar */}
+        <div className={`md:hidden absolute left-0 w-full z-40 transition-all duration-500 ease-in-out ${
           isMobileMenuOpen 
-            ? 'max-h-96 opacity-100 transform translate-y-0' 
-            : 'max-h-0 opacity-0 overflow-hidden transform -translate-y-4'
-        }`}>
-          <div className="px-6 pb-6 bg-gradient-to-b from-white/95 to-gray-50/95 dark:from-gray-900/95 dark:to-gray-800/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-700/60">
-            <div className="space-y-2 pt-4">
-              {navigationItems.map((item, index) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all duration-300 group ${
-                      isActive
-                        ? 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 text-blue-600 dark:text-blue-400 border-l-4 border-blue-500 shadow-lg scale-105'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 hover:scale-105'
-                    }`}
-                    style={{
-                      animationDelay: `${index * 50}ms`
-                    }}
-                  >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${item.color} ${
-                      isActive ? 'shadow-lg' : 'opacity-80 group-hover:opacity-100'
-                    } transition-all duration-300`}>
-                      <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
-                    </div>
-                    <span className="font-semibold text-lg flex-1">{item.label}</span>
-                    {isActive && (
-                      <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse shadow-lg"></div>
-                    )}
-                  </Link>
-                );
-              })}
+            ? 'opacity-100 pointer-events-auto translate-y-0' 
+            : 'opacity-0 pointer-events-none -translate-y-4'
+        }`} style={{
+          top: '100%',
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 60%, rgba(100,116,139,0.12) 100%)',
+          backdropFilter: 'blur(8px)'
+        }}>
+          <div className="relative w-full bg-white dark:bg-gray-900 shadow-2xl border-b border-blue-200/40 dark:border-gray-700/60 rounded-b-3xl transition-transform duration-500">
+            <div className="px-6 pb-8 pt-4">
+              <div className="space-y-2">
+                {navigationItems.map((item, index) => {
+                  const isActive = pathname === item.href;
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-4 rounded-2xl font-semibold transition-all duration-500 group shadow-sm ${
+                        isActive
+                          ? 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 text-blue-600 dark:text-blue-400 border-l-4 border-blue-500 shadow-lg scale-105'
+                          : 'text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 hover:scale-105'
+                      }`}
+                      style={{
+                        animation: isMobileMenuOpen ? `fadeInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards` : 'none',
+                        animationDelay: `${isMobileMenuOpen ? index * 80 + 120 : 0}ms`,
+                        opacity: isMobileMenuOpen ? 1 : 0,
+                        transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(16px)'
+                      }}
+                    >
+                      <Icon className={`transition-transform duration-300 ${isActive ? 'w-5 h-5 scale-110 text-blue-600 dark:text-blue-400' : 'w-6 h-6 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-300'}`} aria-hidden="true" />
+                      <span className="font-semibold text-lg flex-1">{item.label}</span>
+                      {isActive && (
+                        <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse shadow-lg"></div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
+
+        <style jsx global>{`
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        `}</style>
       </nav>
 
       {/* Mobile Menu Overlay - Enhanced */}
