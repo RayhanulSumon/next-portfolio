@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, MouseEvent } from 'react';
 import { Mesh, SphereGeometry, Material } from 'three';
 
 interface DistortMaterial extends Material {
@@ -74,6 +74,28 @@ export default function HeroSection() {
     }
   }, []);
 
+  // 3D tilt effect state/logic
+  const tiltRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0, scale: 1 });
+  const maxTilt = 35; // degrees (increased for more 3D effect)
+
+  function handlePointerMove(e: MouseEvent<HTMLDivElement>) {
+    const node = tiltRef.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = x / rect.width;
+    const py = y / rect.height;
+    // Centered at 0,0
+    const tiltX = (py - 0.5) * -2 * maxTilt;
+    const tiltY = (px - 0.5) * 2 * maxTilt;
+    setTilt({ x: tiltX, y: tiltY, scale: 1.12 });
+  }
+  function handlePointerLeave() {
+    setTilt({ x: 0, y: 0, scale: 1 });
+  }
+
   return (
     <motion.section
       id="hero"
@@ -91,13 +113,18 @@ export default function HeroSection() {
           transition={{ delay: 0.3, duration: 0.7 }}
         >
           <motion.div
+            ref={tiltRef}
             className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 shadow-2xl"
-            style={{ perspective: 1000 }}
-            whileHover={{ rotateY: 18, rotateX: 10, scale: 1.12, y: -8, boxShadow: '0 8px 32px 0 rgba(56,189,248,0.25), 0 0 32px 8px #22d3ee' }}
-            transition={{ type: 'spring', stiffness: 180, damping: 12 }}
+            style={{
+              perspective: 1000,
+              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
+              transition: 'transform 0.25s cubic-bezier(.23,1.01,.32,1)',
+            }}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
           >
-            {/* Animated ring effect with hover state */}
-            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-xs opacity-30 group-hover:blur-sm group-hover:opacity-50 group-hover:animate-hero-ring-fast transition-all duration-300" />
+            {/* Subtle animated ring effect with hover state */}
+            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-none opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
             <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-cyan-400/60 group-hover:scale-110 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
@@ -108,7 +135,7 @@ export default function HeroSection() {
                 priority
               />
             </div>
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300 z-[-1]" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-none opacity-0 group-hover:opacity-10 transition-all duration-300 z-[-1]" />
           </motion.div>
         </motion.div>
         <motion.div
