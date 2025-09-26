@@ -12,12 +12,17 @@ export default function BddtiDetail() {
 					className="w-full h-56 md:h-96 object-cover rounded-2xl shadow mb-10 border border-gray-200 dark:border-slate-800"
 					priority
 				/>
-				<h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">
+				<h1 className="text-4xl md:text-5xl font-extrabold mb-8 text-center text-gray-900 dark:text-white">
 					<span className="text-blue-700 dark:text-cyan-400">BDDTI.com</span> – Bangladesh Driving Training Institute
 				</h1>
-				<p className="mb-10 text-lg md:text-xl text-center max-w-2xl mx-auto text-gray-700 dark:text-gray-100">
-					<span className="font-semibold text-blue-700 dark:text-cyan-400">BDDTI.com</span> is the official website for <span className="font-semibold text-blue-700 dark:text-cyan-400">Bangladesh Driving Training Institute</span>, the country’s leading driving school. The platform provides <span className="font-semibold">comprehensive information</span> about driving courses, <span className="font-semibold">online registration</span>, schedules, and resources for both new and experienced drivers. As the <span className="font-semibold text-blue-700 dark:text-cyan-400">lead web developer</span>, I designed and built a <span className="font-semibold">modern, user-friendly, and mobile-responsive site</span> to streamline the enrollment process and improve access to driving education in Bangladesh.
-				</p>
+				<div className="flex justify-center">
+					<p className="mb-14 mt-2 text-lg md:text-xl leading-relaxed md:leading-loose text-center max-w-3xl md:max-w-2xl lg:max-w-2xl text-gray-700 dark:text-gray-100">
+						<span className="font-semibold text-blue-700 dark:text-cyan-400">BDDTI.com</span> is the official website for <span className="font-semibold text-blue-700 dark:text-cyan-400">Bangladesh Driving Training Institute</span>, the country’s leading driving school. The platform provides <span className="font-semibold">comprehensive information</span> about driving courses, <span className="font-semibold">online registration</span>, schedules, and resources for both new and experienced drivers. As the <span className="font-semibold text-blue-700 dark:text-cyan-400">lead web developer</span>, I designed and built a <span className="font-semibold">modern, user-friendly, and mobile-responsive site</span> to streamline the enrollment process and improve access to driving education in Bangladesh.
+					</p>
+				</div>
+				<div className="flex justify-center mb-10">
+					<div className="w-24 h-1 rounded-full bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-60"></div>
+				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
 					<div>
 						<h2 className="text-2xl font-bold mb-3 text-blue-700 dark:text-cyan-300">Key Features</h2>
