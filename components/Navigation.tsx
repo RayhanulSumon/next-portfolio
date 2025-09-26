@@ -66,13 +66,13 @@ export default function Navigation() {
           <div className="flex items-center w-full">
             {/* Logo/Brand - Always visible */}
             <div className="flex items-center flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
-                <div className="relative">
+              <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+                <div className="relative flex items-center">
                   <div className={`bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${
-                    isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
+                    isScrolled ? 'w-9 h-9 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
                   }`}>
                     <span className={`text-white font-bold transition-all duration-300 ${
-                      isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
+                      isScrolled ? 'text-base sm:text-base' : 'text-lg sm:text-lg'
                     }`}>RS</span>
                   </div>
                   <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur-sm"></div>
@@ -81,16 +81,14 @@ export default function Navigation() {
                     isScrolled ? 'opacity-100 animate-pulse' : 'opacity-0'
                   }`}></div>
                 </div>
-                {/* Brand text always visible, responsive */}
-                <div className="transition-all duration-500">
-                  <span className="font-bold text-base sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                {/* Brand text always visible, responsive and compact on mobile */}
+                <div className="flex flex-col justify-center leading-tight">
+                  <span className="font-bold text-sm sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                     Rayhanul Sumon
                   </span>
-                  <div className={`text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium transition-all duration-300 ${
-                    isScrolled ? 'opacity-70' : 'opacity-100'
-                  }`}>
+                  <span className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 sm:mt-0 transition-all duration-300">
                     Full Stack Developer
-                  </div>
+                  </span>
                 </div>
               </Link>
             </div>
