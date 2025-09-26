@@ -122,7 +122,7 @@ export default function Navigation() {
 
 
         {/* Mobile Navigation Menu - Dropdown Under Navbar */}
-        <div className={`md:hidden absolute left-0 w-full z-40 transition-all duration-500 ease-in-out rounded-b-3xl overflow-hidden shadow-2xl border-b border-blue-200/40 dark:border-gray-700/60 bg-white/95 dark:bg-gray-900/95 ${
+        <div className={`md:hidden absolute left-0 w-full z-40 transition-all duration-500 ease-in-out rounded-b-3xl overflow-hidden shadow-2xl border-b border-blue-200/40 dark:border-gray-700/60 bg-white/95 dark:bg-gradient-to-br dark:from-gray-900 dark:via-slate-900 dark:to-blue-950 ${
           isMobileMenuOpen 
             ? 'opacity-100 pointer-events-auto translate-y-0' 
             : 'opacity-0 pointer-events-none -translate-y-4'
@@ -141,11 +141,11 @@ export default function Navigation() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-4 rounded-2xl font-semibold transition-all duration-500 group shadow-sm ${
-                        isActive
-                          ? 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 text-blue-600 dark:text-blue-400 border-l-4 border-blue-500 shadow-lg scale-105'
-                          : 'text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/50 dark:hover:to-gray-700/50 hover:scale-105'
-                      }`}
+                      className={`flex items-center gap-3 px-4 py-4 rounded-2xl font-semibold transition-all duration-200 group shadow-sm select-none
+                        ${isActive ? 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 text-blue-600 dark:text-blue-400 border-l-4 border-blue-500 shadow-lg scale-105'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 hover:scale-105'}
+                        active:scale-95 active:bg-blue-100/80 dark:active:bg-blue-950/40 dark:active:backdrop-blur-sm dark:active:ring-1 dark:active:ring-blue-900/40'
+                      `}
                       style={{
                         animation: isMobileMenuOpen ? `fadeInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards` : 'none',
                         animationDelay: `${isMobileMenuOpen ? index * 80 + 120 : 0}ms`,
