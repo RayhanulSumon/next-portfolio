@@ -5,13 +5,20 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
+import {
+  HomeIcon,
+  UserCircleIcon,
+  BriefcaseIcon,
+  PencilSquareIcon,
+  EnvelopeIcon
+} from '@heroicons/react/24/outline';
 
 const navigationItems = [
-  { href: '/', icon: '🏠', label: 'Home', color: 'from-purple-500 to-purple-600' },
-  { href: '/about', icon: '👨‍💻', label: 'About', color: 'from-blue-500 to-blue-600' },
-  { href: '/portfolio', icon: '💼', label: 'Portfolio', color: 'from-green-500 to-green-600' },
-  { href: '/blog', icon: '📝', label: 'Blog', color: 'from-orange-500 to-orange-600' },
-  { href: '/contact', icon: '📧', label: 'Contact', color: 'from-pink-500 to-pink-600' },
+  { href: '/', icon: HomeIcon, label: 'Home', color: 'from-purple-500 to-purple-600' },
+  { href: '/about', icon: UserCircleIcon, label: 'About', color: 'from-blue-500 to-blue-600' },
+  { href: '/portfolio', icon: BriefcaseIcon, label: 'Portfolio', color: 'from-green-500 to-green-600' },
+  { href: '/blog', icon: PencilSquareIcon, label: 'Blog', color: 'from-orange-500 to-orange-600' },
+  { href: '/contact', icon: EnvelopeIcon, label: 'Contact', color: 'from-pink-500 to-pink-600' },
 ];
 
 export default function Navigation() {
@@ -129,7 +136,7 @@ export default function Navigation() {
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${item.color} ${
                       isActive ? 'shadow-lg' : 'opacity-80 group-hover:opacity-100'
                     } transition-all duration-300`}>
-                      <span className="text-white text-lg">{item.icon}</span>
+                      <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
                     </div>
                     <span className="font-semibold text-lg flex-1">{item.label}</span>
                     {isActive && (
