@@ -63,32 +63,30 @@ export default function Navigation() {
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-500 ${
           isScrolled ? 'py-2' : 'py-4'
         }`}>
-          <div className="flex justify-between items-center w-full">
-            {/* Logo/Brand - Enhanced with scroll animation */}
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-3 group">
+          <div className="flex items-center w-full">
+            {/* Logo/Brand - Always visible */}
+            <div className="flex items-center flex-shrink-0">
+              <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
                 <div className="relative">
                   <div className={`bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${
-                    isScrolled ? 'w-10 h-10' : 'w-12 h-12'
+                    isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
                   }`}>
                     <span className={`text-white font-bold transition-all duration-300 ${
-                      isScrolled ? 'text-base' : 'text-lg'
+                      isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
                     }`}>RS</span>
                   </div>
                   <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur-sm"></div>
-
                   {/* Scroll indicator ring */}
                   <div className={`absolute -inset-1 border-2 border-blue-400/30 rounded-2xl transition-all duration-500 ${
                     isScrolled ? 'opacity-100 animate-pulse' : 'opacity-0'
                   }`}></div>
                 </div>
-                <div className={`hidden sm:block transition-all duration-500 ${
-                  isScrolled ? 'opacity-80 scale-95' : 'opacity-100 scale-100'
-                }`}>
-                  <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                {/* Brand text always visible, responsive */}
+                <div className="transition-all duration-500">
+                  <span className="font-bold text-base sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                     Rayhanul Sumon
                   </span>
-                  <div className={`text-xs text-gray-500 dark:text-gray-400 font-medium transition-all duration-300 ${
+                  <div className={`text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium transition-all duration-300 ${
                     isScrolled ? 'opacity-70' : 'opacity-100'
                   }`}>
                     Full Stack Developer
@@ -97,10 +95,13 @@ export default function Navigation() {
               </Link>
             </div>
 
-            {/* Desktop Navigation - Enhanced with scroll effects */}
-            <div className="hidden md:flex items-center flex-1 justify-center">
-              <div className={`flex items-center space-x-2 bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 rounded-2xl backdrop-blur-sm shadow-inner border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ${
-                isScrolled ? 'p-1.5' : 'p-2'
+            {/* Spacer to push menu/toggle right */}
+            <div className="flex-1" />
+
+            {/* Desktop Navigation and Dark Mode Toggle - Right side */}
+            <div className="hidden md:flex items-center space-x-6">
+              <div className={`flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 rounded-2xl backdrop-blur-sm shadow-inner border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ${
+                isScrolled ? 'p-1 sm:p-1.5' : 'p-1.5 sm:p-2'
               }`}>
                 {navigationItems.map((item, index) => {
                   const isActive = pathname === item.href;
@@ -108,10 +109,10 @@ export default function Navigation() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`relative rounded-xl transition-all duration-500 font-medium text-sm flex items-center gap-2 group overflow-hidden ${
+                      className={`relative rounded-xl transition-all duration-500 font-medium text-xs sm:text-sm flex items-center gap-1 sm:gap-2 group overflow-hidden ${
                         isScrolled 
-                          ? 'px-3 py-2' 
-                          : 'px-4 py-2.5'
+                          ? 'px-2 py-1 sm:px-3 sm:py-2' 
+                          : 'px-2.5 py-1.5 sm:px-4 sm:py-2.5'
                       } ${
                         isActive
                           ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-lg scale-105'
@@ -154,22 +155,19 @@ export default function Navigation() {
                   );
                 })}
               </div>
-            </div>
-
-            {/* Desktop Dark Mode Toggle - Far right */}
-            <div className="hidden md:flex items-center justify-end ml-4">
-              <SwitchDark />
+              {/* Gap between menu and toggle */}
+              <div className="ml-2 sm:ml-4">
+                <SwitchDark />
+              </div>
             </div>
 
             {/* Mobile Menu Button - Enhanced with scroll animation */}
-            <div className="flex md:hidden items-center gap-3">
-              <div className={`flex items-center justify-center ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`}>
-                <SwitchDark />
-              </div>
+            <div className="flex md:hidden items-center gap-2 sm:gap-3">
+              <div className={`flex items-center justify-center ${isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'}`}> <SwitchDark /> </div>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 ${
-                  isScrolled ? 'w-10 h-10' : 'w-12 h-12'
+                  isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
                 }`}
                 aria-label="Toggle menu"
               >
