@@ -16,7 +16,7 @@ export default function BddtiDetail() {
 					<span className="text-blue-700 dark:text-cyan-400">BDDTI.com</span> – Bangladesh Driving Training Institute
 				</h1>
 				<div className="flex justify-center">
-					<p className="mb-14 mt-2 text-lg md:text-xl leading-relaxed md:leading-loose text-center max-w-3xl md:max-w-2xl lg:max-w-2xl text-gray-700 dark:text-gray-100">
+					<p className="mb-14 mt-2 text-lg md:text-xl leading-relaxed md:leading-loose text-center w-full max-w-5xl text-gray-700 dark:text-gray-100">
 						<span className="font-semibold text-blue-700 dark:text-cyan-400">BDDTI.com</span> is the official website for <span className="font-semibold text-blue-700 dark:text-cyan-400">Bangladesh Driving Training Institute</span>, the country’s leading driving school. The platform provides <span className="font-semibold">comprehensive information</span> about driving courses, <span className="font-semibold">online registration</span>, schedules, and resources for both new and experienced drivers. As the <span className="font-semibold text-blue-700 dark:text-cyan-400">lead web developer</span>, I designed and built a <span className="font-semibold">modern, user-friendly, and mobile-responsive site</span> to streamline the enrollment process and improve access to driving education in Bangladesh.
 					</p>
 				</div>
