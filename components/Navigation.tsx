@@ -110,16 +110,15 @@ export default function Navigation() {
 
 
         {/* Mobile Navigation Menu - Dropdown Under Navbar */}
-        <div className={`md:hidden absolute left-0 w-full z-40 transition-all duration-500 ease-in-out ${
+        <div className={`md:hidden absolute left-0 w-full z-40 transition-all duration-500 ease-in-out rounded-b-3xl overflow-hidden shadow-2xl border-b border-blue-200/40 dark:border-gray-700/60 bg-white/95 dark:bg-gray-900/95 ${
           isMobileMenuOpen 
             ? 'opacity-100 pointer-events-auto translate-y-0' 
             : 'opacity-0 pointer-events-none -translate-y-4'
         }`} style={{
           top: '100%',
-          background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 60%, rgba(100,116,139,0.12) 100%)',
           backdropFilter: 'blur(8px)'
         }}>
-          <div className="relative w-full bg-white dark:bg-gray-900 shadow-2xl border-b border-blue-200/40 dark:border-gray-700/60 rounded-b-3xl transition-transform duration-500">
+          <div className="relative w-full">
             <div className="px-6 pb-8 pt-4">
               <div className="space-y-2">
                 {navigationItems.map((item, index) => {
