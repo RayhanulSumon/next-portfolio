@@ -90,7 +90,24 @@ export default function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
         >
-          <Image src="/images/hero/sumon.webp" alt="Rayhanul Sumon" width={320} height={320} className="rounded-2xl shadow-lg border-4 border-blue-500 object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80" />
+          <motion.div
+            className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 shadow-2xl"
+            style={{ perspective: 1000 }}
+            whileHover={{ rotateY: 10, rotateX: 6, scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+          >
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-blue-400/40 transition-all duration-300">
+              <Image
+                src="/images/hero/sumon.webp"
+                alt="Rayhanul Sumon"
+                width={320}
+                height={320}
+                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105"
+                priority
+              />
+            </div>
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-xl opacity-60 group-hover:opacity-80 transition-all duration-300 z-[-1]" />
+          </motion.div>
         </motion.div>
         <motion.div
           className="text-center md:text-left max-w-2xl"
