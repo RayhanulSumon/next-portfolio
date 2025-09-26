@@ -151,24 +151,27 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.7 }}
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent">
-            Hi, I&apos;m Rayhanul Sumon
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md">
+            Hi, I&apos;m <span className="inline-block">Rayhanul Sumon</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Full Stack Web Developer passionate about creating amazing digital experiences with React, Next.js, Laravel, and modern web technologies.
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-700 dark:text-cyan-300 mb-3 tracking-wide leading-snug">
+            Full Stack Web Developer
+          </h2>
+          <p className="prose prose-blue dark:prose-invert text-base sm:text-lg md:text-xl font-normal text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            I&apos;m passionate about creating amazing digital experiences with <span className='font-semibold text-blue-600 dark:text-cyan-400'>React</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Next.js</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Laravel</span>, and modern web technologies. I love building fast, accessible, and beautiful web apps.
           </p>
-          <div className="flex gap-4 justify-center md:justify-start">
+          <div className="flex gap-4 justify-center md:justify-start mt-2">
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-semibold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition"
+              className="px-7 py-2.5 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-bold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition text-base sm:text-lg tracking-wide"
             >Contact Me</motion.a>
             <motion.a
               href="/images/cv.webp" download
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-semibold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition"
+              className="px-7 py-2.5 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-bold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition text-base sm:text-lg tracking-wide"
             >Download CV</motion.a>
           </div>
         </motion.div>
