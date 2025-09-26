@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import SwitchDark from "./switch/SwitchDark";
+import DesktopNavBar from './DesktopNavBar';
+import MobileNavBar from './MobileNavBar';
 
 const navigationItems = [
   { href: '/', icon: '🏠', label: 'Home', color: 'from-purple-500 to-purple-600' },
@@ -92,109 +93,11 @@ export default function Navigation() {
                 </div>
               </Link>
             </div>
-
             {/* Spacer to push menu/toggle right */}
             <div className="flex-1" />
-
-            {/* Desktop Navigation and Dark Mode Toggle - Right side */}
-            <div className="hidden md:flex items-center space-x-6">
-              <div className={`flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 rounded-2xl backdrop-blur-sm shadow-inner border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ${
-                isScrolled ? 'p-1 sm:p-1.5' : 'p-1.5 sm:p-2'
-              }`}>
-                {navigationItems.map((item, index) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`relative rounded-xl transition-all duration-500 font-medium text-xs sm:text-sm flex items-center gap-1 sm:gap-2 group overflow-hidden ${
-                        isScrolled 
-                          ? 'px-2 py-1 sm:px-3 sm:py-2' 
-                          : 'px-2.5 py-1.5 sm:px-4 sm:py-2.5'
-                      } ${
-                        isActive
-                          ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-lg scale-105'
-                          : 'text-gray-600 dark:text-gray-400 hover:bg-white/80 dark:hover:bg-gray-700/80 hover:text-gray-900 dark:hover:text-white hover:scale-105'
-                      }`}
-                      style={{
-                        animationDelay: `${index * 100}ms`
-                      }}
-                    >
-                      {/* Magnetic hover effect background */}
-                      <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-xl`}></div>
-
-                      <span className={`transition-all duration-300 relative z-10 ${
-                        isScrolled ? 'text-base' : 'text-lg'
-                      } ${
-                        isActive ? 'scale-110 animate-pulse' : 'group-hover:scale-110 group-hover:rotate-12'
-                      }`}>
-                        {item.icon}
-                      </span>
-
-                      <span className={`relative z-10 transition-all duration-300 ${
-                        isScrolled && !isActive ? 'opacity-80' : 'opacity-100'
-                      }`}>
-                        {item.label}
-                        {isActive && (
-                          <div className={`absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r ${item.color} rounded-full animate-pulse`}></div>
-                        )}
-                      </span>
-
-                      {/* Ripple effect on hover */}
-                      <div className="absolute inset-0 rounded-xl overflow-hidden">
-                        <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-20 transition-all duration-500 transform scale-0 group-hover:scale-100 rounded-xl`}></div>
-                      </div>
-
-                      {/* Scroll indicator for active item */}
-                      {isActive && isScrolled && (
-                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full animate-bounce"></div>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-              {/* Gap between menu and toggle */}
-              <div className="ml-2 sm:ml-4">
-                <SwitchDark />
-              </div>
-            </div>
-
-            {/* Mobile Menu Button - Enhanced with scroll animation */}
-            <div className="flex md:hidden items-center gap-3">
-              <div className={`flex items-center justify-center ${isScrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'}`}> <SwitchDark /> </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 ${
-                  isScrolled ? 'w-8 h-8 sm:w-9 sm:h-9' : 'w-9 h-9 sm:w-10 sm:h-10'
-                }`}
-                aria-label="Toggle menu"
-              >
-                <div className={`flex flex-col justify-center items-center transition-all duration-300 ${
-                  isScrolled ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-5 h-5 sm:w-6 sm:h-6'
-                }`}>
-                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
-                    isScrolled ? 'w-4 sm:w-5' : 'w-5 sm:w-6'
-                  } ${
-                    isMobileMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'
-                  }`}></span>
-                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full my-0.5 ${
-                    isScrolled ? 'w-4 sm:w-5' : 'w-5 sm:w-6'
-                  } ${
-                    isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
-                  }`}></span>
-                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
-                    isScrolled ? 'w-4 sm:w-5' : 'w-5 sm:w-6'
-                  } ${
-                    isMobileMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'
-                  }`}></span>
-                </div>
-
-                {/* Scroll progress indicator */}
-                {isScrolled && (
-                  <div className="absolute -inset-0.5 border border-blue-400/40 rounded-2xl animate-pulse"></div>
-                )}
-              </button>
-            </div>
+            {/* Desktop and Mobile Navbars */}
+            <DesktopNavBar isScrolled={isScrolled} pathname={pathname} navigationItems={navigationItems} />
+            <MobileNavBar isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
           </div>
         </div>
 
