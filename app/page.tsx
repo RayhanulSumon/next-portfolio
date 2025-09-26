@@ -7,20 +7,20 @@ import AchievementsSection from './page/AchievementsSection';
 
 
 export const metadata: Metadata = {
-    title: 'Rayhanul SUmon - Full Stack Developer',
+    title: 'Rayhanul Sumon - Full Stack Developer',
     description: 'Welcome to my personal portfolio website. I am a Full Stack Developer specializing in React, Next.js, and Laravel. Explore my skills, achievements, and projects.',
     keywords: ['Rayhanul Sumon', 'Full Stack Developer', 'React', 'Next.js', 'Laravel', 'Portfolio', 'Web Development'],
     authors: [{ name: 'Rayhanul Sumon', url: 'https://rayhanulsumon.com' }],
     creator: 'Rayhanul Sumon',
-    publisher: 'John Doe',
+    publisher: 'Rayhanul Sumon',
     openGraph: {
         title: 'Rayhanul Sumon - Full Stack Developer',
         description: 'Welcome to my personal portfolio website. I am a Full Stack Developer specializing in React, Next.js, and Laravel. Explore my skills, achievements, and projects.',
-        url: 'https://johndoe.com',
-        siteName: 'John Doe Portfolio',
+        url: 'https://rayhanulsumon.com',
+        siteName: 'Rayhanul Sumon Portfolio',
         images: [
             {
-                url: 'https://johndoe.com/og-image.jpg',
+                url: 'https://rayhanulsumon.com/og-image.jpg',
                 width: 1200,
                 height: 630,
                 alt: 'Rayhanul Sumon Portfolio'
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'John Doe - Full Stack Developer',
+        title: 'Rayhanul Sumon - Full Stack Developer',
         description: 'Welcome to my personal portfolio website. I am a Full Stack Developer specializing in React, Next.js, and Laravel. Explore my skills, achievements, and projects.',
         images: ['https://rayhanulsumon.com/twitter-image.jpg'],
         creator: '@RayhanulSumon'
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
         ]
     },
     manifest: '/site.webmanifest'
-}
+};
 
 export default function Home() {
   return (
