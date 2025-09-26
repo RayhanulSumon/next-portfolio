@@ -12,6 +12,7 @@ const featuredProjects = [
 		imageLight: '/images/portfolio/besttutor_light.webp',
 		imageDark: '/images/portfolio/besttutor_dark.webp',
 		link: 'https://besttutor.xyz',
+		slug: 'besttutor-xyz',
 	},
 	{
 		title: 'BDDTI.com',
@@ -20,6 +21,7 @@ const featuredProjects = [
 		imageLight: '/images/portfolio/bddti_light.webp',
 		imageDark: '/images/portfolio/bddti_light.webp',
 		link: 'https://bddti.com',
+		slug: 'bddti-com',
 	},
 	{
 		title: 'BDDTI Admin Panel',
@@ -28,6 +30,7 @@ const featuredProjects = [
 		imageLight: '/images/portfolio/bddti_light.webp',
 		imageDark: '/images/portfolio/bddti_light.webp',
 		link: 'https://admin.bddti.com',
+		slug: 'bddti-admin-panel',
 	},
 ];
 
@@ -84,12 +87,22 @@ export default function FeaturedProjectsSection() {
 									<p className="text-gray-700 dark:text-gray-300 mb-4 flex-1">
 										{project.description}
 									</p>
-									<Link
-										href={project.link}
-										className="mt-auto inline-block text-blue-600 dark:text-blue-400 font-medium hover:underline"
-									>
-										View Portfolio
-									</Link>
+									<div className="mt-auto flex gap-3">
+										<Link
+											href={project.link}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="inline-block text-blue-600 dark:text-blue-400 font-medium hover:underline border border-blue-600 dark:border-blue-400 rounded px-4 py-2 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/30"
+										>
+											View Live
+										</Link>
+										<Link
+											href={`/portfolio/${project.slug}`}
+											className="inline-block text-gray-700 dark:text-gray-200 font-medium hover:underline border border-gray-400 dark:border-gray-700 rounded px-4 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+										>
+											View Details
+										</Link>
+									</div>
 								</div>
 							</motion.div>
 						);
