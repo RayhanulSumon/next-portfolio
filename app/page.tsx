@@ -55,8 +55,8 @@ export default function Home() {
       <RightNavBar />
       <main className="pt-0">
         <HeroSection />
-        <FeaturedProjectsSection />
         <SkillsSection />
+        <FeaturedProjectsSection />
         <AchievementsSection />
       </main>
 
