@@ -90,7 +90,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
         >
-          <Image src="/images/hero/sumon.jpg" alt="Rayhanul Sumon" width={320} height={320} className="rounded-2xl shadow-lg border-4 border-blue-500 object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80" />
+          <Image src="/images/hero/sumon.webp" alt="Rayhanul Sumon" width={320} height={320} className="rounded-2xl shadow-lg border-4 border-blue-500 object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80" />
         </motion.div>
         <motion.div
           className="text-center md:text-left max-w-2xl"
