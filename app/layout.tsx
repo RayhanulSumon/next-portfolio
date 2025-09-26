@@ -5,6 +5,7 @@ import {PortfolioProvider} from "@/lib/context/PortfolioContext";
 import SwitchDark from "../components/switch/SwitchDark";
 import Navigation from "../components/Navigation";
 import {ThemeProvider} from "next-themes";
+import React from "react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -30,7 +31,31 @@ export const metadata: Metadata = {
         title: "Rayhanul Sumon - Full Stack Developer Portfolio",
         description: "Portfolio of Rayhanul Sumon - Full Stack Web Developer",
         type: "website",
+        url: "https://sumon.dev/", // Add your canonical URL
+        images: [
+            {
+                url: "/images/hero/sumon.jpg", // Use a relevant image path
+                width: 1200,
+                height: 630,
+                alt: "Rayhanul Sumon - Full Stack Developer Portfolio",
+            },
+        ],
     },
+    twitter: {
+        card: "summary_large_image",
+        title: "Rayhanul Sumon - Full Stack Developer Portfolio",
+        description: "Portfolio of Rayhanul Sumon - Full Stack Web Developer",
+        creator: "@sumonwebdev", // Replace with your Twitter handle
+        images: [
+            "/images/hero/sumon.jpg"
+        ],
+    },
+    icons: {
+        icon: "/favicon.ico",
+        shortcut: "/favicon.ico",
+        apple: "/images/hero/sumon.jpg",
+    },
+    metadataBase: new URL("https://sumon.dev"),
 };
 
 export default function RootLayout({
@@ -40,7 +65,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} font-sans bg-white text-black dark:bg-black dark:text-white`}> {/* Add fallback font and color classes */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <SwitchDark/>
             <Navigation/>
