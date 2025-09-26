@@ -17,16 +17,16 @@ const featuredProjects = [
 		title: 'BDDTI.com',
 		description:
 			'The official website for Bangladesh Driving Training Institute. Provides information on driving courses, online registration, class schedules, and resources for new and experienced drivers. Developed with Next.js, React, and Tailwind CSS for a user-friendly experience.',
-		imageLight: '/images/portfolio/project-2.jpg',
-		imageDark: '/images/portfolio/project-2.jpg',
+		imageLight: '/images/portfolio/bddti_light.webp',
+		imageDark: '/images/portfolio/bddti_light.webp',
 		link: 'https://bddti.com',
 	},
 	{
 		title: 'BDDTI Admin Panel',
 		description:
 			'A secure admin dashboard for BDDTI, allowing staff to manage courses, users, and content, with advanced analytics and reporting. Built with Next.js, React, and RESTful APIs for robust performance and scalability.',
-		imageLight: '/images/portfolio/project-3.jpg',
-		imageDark: '/images/portfolio/project-3.jpg',
+		imageLight: '/images/portfolio/bddti_light.webp',
+		imageDark: '/images/portfolio/bddti_light.webp',
 		link: 'https://admin.bddti.com',
 	},
 ];
