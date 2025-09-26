@@ -46,7 +46,7 @@ function Hero3DBackground() {
       }
     });
     return (
-      <Sphere ref={ref} args={[0.8, 64, 64]} scale={1.1} position={[0.7, yPos.current, 0]}>
+      <Sphere ref={ref} args={[0.6, 64, 64]} scale={0.9} position={[0.7, yPos.current, 0]}>
         <MeshDistortMaterial color="#38bdf8" speed={1.2} transparent opacity={0.7} />
       </Sphere>
     );
@@ -56,7 +56,7 @@ function Hero3DBackground() {
   if (!isClient) return null;
 
   return (
-    <div className="absolute left-0 right-0 top-0 h-[200vh] pointer-events-none" style={{ filter: 'blur(8px)', opacity: 0.35 }}>
+    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(8px)', opacity: 0.35 }}>
       <Canvas camera={{ position: [0, 0, 2.5], fov: 50 }} style={{ width: '100%', height: '100%' }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[2, 2, 2]} intensity={0.3} />
