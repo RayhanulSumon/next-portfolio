@@ -102,6 +102,23 @@ export default function HeroSection() {
   function handlePointerLeave() {
     setTilt({ x: 0, y: 0, scale: 1 });
   }
+  function handleTouchMove(e: React.TouchEvent<HTMLDivElement>) {
+    const node = tiltRef.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!touch) return;
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const px = x / rect.width;
+    const py = y / rect.height;
+    const tiltX = (py - 0.5) * -2 * maxTilt;
+    const tiltY = (px - 0.5) * 2 * maxTilt;
+    setTilt({ x: tiltX, y: tiltY, scale: 1.12 });
+  }
+  function handleTouchEnd() {
+    setTilt({ x: 0, y: 0, scale: 1 });
+  }
 
   return (
     <motion.section
@@ -129,10 +146,12 @@ export default function HeroSection() {
             }}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Subtle animated ring effect with hover state */}
-            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-cyan-400/60 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 group-hover:scale-110 transition-all duration-300 relative z-10">
+            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-2 md:border-4 border-white dark:border-slate-800 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 group-hover:scale-110 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
