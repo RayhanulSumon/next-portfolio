@@ -4,6 +4,7 @@ import HeroSection from './page/HeroSection';
 import RightNavBar from './page/RightNavBar';
 import SkillsSection from './page/SkillsSection';
 import AchievementsSection from './page/AchievementsSection';
+import FeaturedProjectsSection from './page/FeaturedProjectsSection';
 
 
 export const metadata: Metadata = {
@@ -54,6 +55,7 @@ export default function Home() {
       <RightNavBar />
       <main className="pt-0">
         <HeroSection />
+        <FeaturedProjectsSection />
         <SkillsSection />
         <AchievementsSection />
       </main>
