@@ -5,6 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import React, { useRef, useEffect, useState, MouseEvent } from 'react';
 import { Mesh, SphereGeometry, Material } from 'three';
+import { useTheme } from 'next-themes';
 
 interface DistortMaterial extends Material {
   distort: number;
@@ -13,6 +14,7 @@ interface DistortMaterial extends Material {
 function Hero3DBackground() {
   // Only render Canvas after hydration
   const [isClient, setIsClient] = useState(false);
+  const { resolvedTheme } = useTheme();
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -29,12 +31,13 @@ function Hero3DBackground() {
 
   function AnimatedSphere() {
     const ref = useRef<Mesh<SphereGeometry, Material>>(null);
-    // Internal y position for smooth interpolation
     const yPos = useRef(-0.7);
     useFrame(() => {
       if (ref.current) {
-        // Only run animation on client
+        // Set color based on theme
+        const color = resolvedTheme === 'dark' ? '#0ea5e9' : '#38bdf8';
         (ref.current.material as DistortMaterial).distort = 0.15 + Math.sin(Date.now() * 0.001) * 0.07;
+        (ref.current.material as MeshDistortMaterial).color.set(color);
         const minY = -0.7; // start at bottom of hero
         const maxY = 2.5; // move further down as you scroll (increase for more movement)
         // Use a fallback value for SSR
@@ -47,7 +50,7 @@ function Hero3DBackground() {
     });
     return (
       <Sphere ref={ref} args={[0.6, 64, 64]} scale={0.9} position={[0.7, yPos.current, 0]}>
-        <MeshDistortMaterial color="#38bdf8" speed={1.2} transparent opacity={0.7} />
+        <MeshDistortMaterial color={resolvedTheme === 'dark' ? '#0ea5e9' : '#38bdf8'} speed={1.2} transparent opacity={0.7} />
       </Sphere>
     );
   }
@@ -56,10 +59,10 @@ function Hero3DBackground() {
   if (!isClient) return null;
 
   return (
-    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(8px)', opacity: 0.35 }}>
+    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(10px)', opacity: resolvedTheme === 'dark' ? 0.45 : 0.35 }}>
       <Canvas camera={{ position: [0, 0, 2.5], fov: 50 }} style={{ width: '100%', height: '100%' }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[2, 2, 2]} intensity={0.3} />
+        <ambientLight intensity={resolvedTheme === 'dark' ? 0.7 : 0.5} />
+        <directionalLight position={[2, 2, 2]} intensity={resolvedTheme === 'dark' ? 0.5 : 0.3} />
         <AnimatedSphere />
       </Canvas>
     </div>
@@ -99,7 +102,7 @@ export default function HeroSection() {
   return (
     <motion.section
       id="hero"
-      className="min-h-screen flex items-center bg-gradient-to-br from-white to-gray-50 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
+      className="min-h-screen flex items-center bg-gradient-to-br from-white to-blue-100 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -114,7 +117,7 @@ export default function HeroSection() {
         >
           <motion.div
             ref={tiltRef}
-            className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 shadow-2xl"
+            className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 shadow-2xl"
             style={{
               perspective: 1000,
               transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
@@ -124,8 +127,8 @@ export default function HeroSection() {
             onPointerLeave={handlePointerLeave}
           >
             {/* Subtle animated ring effect with hover state */}
-            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-none opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-cyan-400/60 group-hover:scale-110 transition-all duration-300 relative z-10">
+            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-cyan-400/60 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 group-hover:scale-110 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
@@ -135,7 +138,7 @@ export default function HeroSection() {
                 priority
               />
             </div>
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-none opacity-0 group-hover:opacity-10 transition-all duration-300 z-[-1]" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-0 group-hover:opacity-10 transition-all duration-300 z-[-1]" />
           </motion.div>
         </motion.div>
         <motion.div
@@ -144,7 +147,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.7 }}
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent">
             Hi, I&apos;m Rayhanul Sumon
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
@@ -155,13 +158,13 @@ export default function HeroSection() {
               href="#contact"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+              className="px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-semibold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition"
             >Contact Me</motion.a>
             <motion.a
               href="/images/cv.webp" download
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-cyan-500 text-white rounded-lg font-semibold shadow hover:bg-cyan-600 transition"
+              className="px-6 py-2 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-semibold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition"
             >Download CV</motion.a>
           </div>
         </motion.div>
