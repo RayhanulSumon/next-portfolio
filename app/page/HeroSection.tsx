@@ -96,7 +96,9 @@ export default function HeroSection() {
             whileHover={{ rotateY: 10, rotateX: 6, scale: 1.05 }}
             transition={{ type: 'spring', stiffness: 200, damping: 15 }}
           >
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-blue-400/40 transition-all duration-300">
+            {/* Animated ring effect */}
+            <span className="absolute -inset-2 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-sm opacity-50" />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-blue-400/40 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
