@@ -9,21 +9,24 @@ const featuredProjects = [
 		title: 'BestTutor.xyz',
 		description:
 			'A modern online tutoring marketplace enabling students to find, book, and learn from expert tutors. Features include tutor search, real-time video lessons, secure payments, and personalized dashboards. Built with Next.js, Node.js, MongoDB, and WebRTC.',
-		image: '/images/portfolio/besttutor_light.webp',
+		imageLight: '/images/portfolio/besttutor_light.webp',
+		imageDark: '/images/portfolio/besttutor_dark.webp',
 		link: 'https://besttutor.xyz',
 	},
 	{
 		title: 'BDDTI.com',
 		description:
 			'The official website for Bangladesh Driving Training Institute. Provides information on driving courses, online registration, class schedules, and resources for new and experienced drivers. Developed with Next.js, React, and Tailwind CSS for a user-friendly experience.',
-		image: '/images/portfolio/project-2.jpg',
+		imageLight: '/images/portfolio/project-2.jpg',
+		imageDark: '/images/portfolio/project-2.jpg',
 		link: 'https://bddti.com',
 	},
 	{
 		title: 'BDDTI Admin Panel',
 		description:
 			'A secure admin dashboard for BDDTI, allowing staff to manage courses, users, and content, with advanced analytics and reporting. Built with Next.js, React, and RESTful APIs for robust performance and scalability.',
-		image: '/images/portfolio/project-3.jpg',
+		imageLight: '/images/portfolio/project-3.jpg',
+		imageDark: '/images/portfolio/project-3.jpg',
 		link: 'https://admin.bddti.com',
 	},
 ];
@@ -60,13 +63,7 @@ export default function FeaturedProjectsSection() {
 					viewport={{ once: true, amount: 0.2 }}
 				>
 					{featuredProjects.map((project, idx) => {
-						// Dynamically set BestTutor image based on theme
-						let imageSrc = project.image;
-						if (project.title === 'BestTutor.xyz') {
-							imageSrc = resolvedTheme === 'dark'
-								? '/images/portfolio/besttutor_dark.webp'
-								: '/images/portfolio/besttutor_light.webp';
-						}
+						const imageSrc = resolvedTheme === 'dark' ? project.imageDark : project.imageLight;
 						return (
 							<motion.div
 								key={idx}
