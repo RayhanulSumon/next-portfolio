@@ -80,7 +80,7 @@ export default function SkillsSection() {
 	return (
 		<motion.section
 			id="skills"
-			className={`relative py-24 flex items-center justify-center min-h-[65vh] ${sectionGradient} overflow-hidden border-t-4 border-sky-200 dark:border-fuchsia-800`}
+			className={`relative py-24 flex items-center justify-center min-h-[65vh] ${sectionGradient} overflow-hidden border-t-4 border-slate-300 dark:border-slate-800`}
 			initial={{ opacity: 0, y: 40 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
