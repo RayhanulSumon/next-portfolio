@@ -2,7 +2,6 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {PortfolioProvider} from "@/lib/context/PortfolioContext";
-import SwitchDark from "../components/switch/SwitchDark";
 import Navigation from "../components/Navigation";
 import {ThemeProvider} from "next-themes";
 import React from "react";
@@ -67,7 +66,6 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} font-sans bg-white text-black dark:bg-black dark:text-white`}> {/* Add fallback font and color classes */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <SwitchDark/>
             <Navigation/>
             <PortfolioProvider>
                 {children}

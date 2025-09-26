@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import SwitchDark from "./switch/SwitchDark";
 
 const navigationItems = [
   { href: '/', icon: '🏠', label: 'Home', color: 'from-purple-500 to-purple-600' },
@@ -62,7 +63,7 @@ export default function Navigation() {
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-500 ${
           isScrolled ? 'py-2' : 'py-4'
         }`}>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center w-full">
             {/* Logo/Brand - Enhanced with scroll animation */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-3 group">
@@ -97,7 +98,7 @@ export default function Navigation() {
             </div>
 
             {/* Desktop Navigation - Enhanced with scroll effects */}
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex items-center flex-1 justify-center">
               <div className={`flex items-center space-x-2 bg-gradient-to-r from-gray-50/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 rounded-2xl backdrop-blur-sm shadow-inner border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ${
                 isScrolled ? 'p-1.5' : 'p-2'
               }`}>
@@ -155,39 +156,49 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Mobile Menu Button - Enhanced with scroll animation */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 ${
-                isScrolled ? 'w-10 h-10' : 'w-12 h-12'
-              }`}
-              aria-label="Toggle menu"
-            >
-              <div className={`flex flex-col justify-center items-center transition-all duration-300 ${
-                isScrolled ? 'w-5 h-5' : 'w-6 h-6'
-              }`}>
-                <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
-                  isScrolled ? 'w-5' : 'w-6'
-                } ${
-                  isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : '-translate-y-1'
-                }`}></span>
-                <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full my-1 ${
-                  isScrolled ? 'w-5' : 'w-6'
-                } ${
-                  isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
-                }`}></span>
-                <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
-                  isScrolled ? 'w-5' : 'w-6'
-                } ${
-                  isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : 'translate-y-1'
-                }`}></span>
-              </div>
+            {/* Desktop Dark Mode Toggle - Far right */}
+            <div className="hidden md:flex items-center justify-end ml-4">
+              <SwitchDark />
+            </div>
 
-              {/* Scroll progress indicator */}
-              {isScrolled && (
-                <div className="absolute -inset-0.5 border border-blue-400/40 rounded-2xl animate-pulse"></div>
-              )}
-            </button>
+            {/* Mobile Menu Button - Enhanced with scroll animation */}
+            <div className="flex md:hidden items-center gap-3">
+              <div className={`flex items-center justify-center ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`}>
+                <SwitchDark />
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className={`relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 ${
+                  isScrolled ? 'w-10 h-10' : 'w-12 h-12'
+                }`}
+                aria-label="Toggle menu"
+              >
+                <div className={`flex flex-col justify-center items-center transition-all duration-300 ${
+                  isScrolled ? 'w-5 h-5' : 'w-6 h-6'
+                }`}>
+                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
+                    isScrolled ? 'w-5' : 'w-6'
+                  } ${
+                    isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : '-translate-y-1'
+                  }`}></span>
+                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full my-1 ${
+                    isScrolled ? 'w-5' : 'w-6'
+                  } ${
+                    isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+                  }`}></span>
+                  <span className={`bg-gray-700 dark:bg-gray-300 block transition-all duration-300 ease-out h-0.5 rounded-full ${
+                    isScrolled ? 'w-5' : 'w-6'
+                  } ${
+                    isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : 'translate-y-1'
+                  }`}></span>
+                </div>
+
+                {/* Scroll progress indicator */}
+                {isScrolled && (
+                  <div className="absolute -inset-0.5 border border-blue-400/40 rounded-2xl animate-pulse"></div>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 

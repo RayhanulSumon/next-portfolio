@@ -23,7 +23,7 @@ const SwitchDark: React.FC = () => {
     <button
       onClick={toggleTheme}
       aria-label={resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="fixed top-4 right-4 z-60 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
+      className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
     >
       {resolvedTheme === 'dark' ? (
         <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
