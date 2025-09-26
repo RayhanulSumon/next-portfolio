@@ -150,7 +150,7 @@ export default function HeroSection() {
             onTouchEnd={handleTouchEnd}
           >
             {/* Subtle animated ring effect with hover state */}
-            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
+            <span className="absolute -inset-[0px] sm:-inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
             <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-2 md:border-4 border-white dark:border-slate-800 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 group-hover:scale-110 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
