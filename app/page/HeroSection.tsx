@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import React, { useRef, useEffect, useState, MouseEvent } from 'react';
-import { Mesh, SphereGeometry, Material } from 'three';
+import { Mesh, SphereGeometry, Material, MeshStandardMaterial } from 'three';
 import { useTheme } from 'next-themes';
 
 interface DistortMaterial extends Material {
@@ -37,7 +37,11 @@ function Hero3DBackground() {
         // Set color based on theme
         const color = resolvedTheme === 'dark' ? '#0ea5e9' : '#38bdf8';
         (ref.current.material as DistortMaterial).distort = 0.15 + Math.sin(Date.now() * 0.001) * 0.07;
-        (ref.current.material as MeshDistortMaterial).color.set(color);
+        // Type guard for color property
+        const mat = ref.current.material as MeshStandardMaterial;
+        if (mat && mat.color && typeof mat.color.set === 'function') {
+          mat.color.set(color);
+        }
         const minY = -0.7; // start at bottom of hero
         const maxY = 2.5; // move further down as you scroll (increase for more movement)
         // Use a fallback value for SSR
