@@ -145,6 +145,25 @@
   }
 }
 
+@keyframes hero-ring-fast {
+  0% {
+    filter: hue-rotate(0deg) brightness(1.1) saturate(1.5);
+    opacity: 0.8;
+  }
+  50% {
+    filter: hue-rotate(180deg) brightness(1.3) saturate(2);
+    opacity: 1;
+  }
+  100% {
+    filter: hue-rotate(360deg) brightness(1.1) saturate(1.5);
+    opacity: 0.8;
+  }
+}
+
 .animate-hero-ring {
   animation: hero-ring 4s linear infinite;
+}
+
+.group-hover\:animate-hero-ring-fast:hover {
+  animation: hero-ring-fast 1.2s linear infinite !important;
 }

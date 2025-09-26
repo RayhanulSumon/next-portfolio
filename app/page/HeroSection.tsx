@@ -93,22 +93,22 @@ export default function HeroSection() {
           <motion.div
             className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 shadow-2xl"
             style={{ perspective: 1000 }}
-            whileHover={{ rotateY: 10, rotateX: 6, scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+            whileHover={{ rotateY: 18, rotateX: 10, scale: 1.12, y: -8, boxShadow: '0 8px 32px 0 rgba(56,189,248,0.25), 0 0 32px 8px #22d3ee' }}
+            transition={{ type: 'spring', stiffness: 180, damping: 12 }}
           >
-            {/* Animated ring effect */}
-            <span className="absolute -inset-2 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-sm opacity-50" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-blue-400/40 transition-all duration-300 relative z-10">
+            {/* Animated ring effect with hover state */}
+            <span className="absolute -inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 blur-xs opacity-30 group-hover:blur-sm group-hover:opacity-50 group-hover:animate-hero-ring-fast transition-all duration-300" />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-4 border-white dark:border-slate-800 group-hover:shadow-cyan-400/60 group-hover:scale-110 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
                 width={320}
                 height={320}
-                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105"
+                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2"
                 priority
               />
             </div>
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-xl opacity-60 group-hover:opacity-80 transition-all duration-300 z-[-1]" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300 z-[-1]" />
           </motion.div>
         </motion.div>
         <motion.div
