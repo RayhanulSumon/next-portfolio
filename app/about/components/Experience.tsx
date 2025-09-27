@@ -53,12 +53,12 @@ const Experience: React.FC = () => {
           <div className="absolute left-0 top-2 w-6 h-6 bg-white dark:bg-gray-800 border-4 border-blue-500 rounded-full shadow-lg"></div>
 
           {/* Content */}
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+          <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-shadow duration-300">
             <div className="flex flex-wrap items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full">
+              <span className="text-sm font-semibold text-blue-600 dark:text-blue-300 bg-blue-100/70 dark:bg-blue-900/30 px-3 py-1 rounded-full">
                 {item.year}
               </span>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded-full">
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-200/70 dark:bg-gray-700/60 px-2 py-1 rounded-full">
                 {item.type}
               </span>
             </div>
