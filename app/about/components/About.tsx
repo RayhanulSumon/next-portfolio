@@ -53,7 +53,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Experience & Education Section */}
-      <section className="py-20 bg-gray-50/80 dark:bg-gray-900/80">
+      <section className="py-20 bg-white/60 dark:bg-gray-900/60 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
             <AboutExperience />
