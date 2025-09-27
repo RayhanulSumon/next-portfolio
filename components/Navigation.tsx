@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
 import {
@@ -25,37 +25,52 @@ export default function Navigation() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState('up');
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
+    if (navRef.current) {
+      setNavHeight(navRef.current.offsetHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Determine scroll direction
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      setIsScrolled(currentScrollY > navHeight);
+      if (currentScrollY > lastScrollY && currentScrollY > navHeight) {
         setScrollDirection('down');
       } else {
         setScrollDirection('up');
       }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
 
-      setIsScrolled(currentScrollY > 20);
-      setLastScrollY(currentScrollY);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [lastScrollY]);
+  }, [navHeight]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -71,7 +86,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`sticky top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out transform ${
+      <nav ref={navRef} className={`sticky top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out transform ${
         scrollDirection === 'down' && isScrolled 
           ? '-translate-y-1' 
           : 'translate-y-0'
