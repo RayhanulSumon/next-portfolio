@@ -48,23 +48,17 @@ const Skills: React.FC = () => {
               .map((skill, index) => (
                 <Card
                   key={index}
-                  className="relative p-5 flex flex-col gap-3 transition-all duration-300 hover:scale-[1.02] border rounded-xl shadow-xl backdrop-blur-2xl
-                    bg-white/20 border-white/20
-                    dark:bg-black/30 dark:border-white/10 dark:shadow-black/70"
+                  className="relative p-5 flex flex-col gap-3 transition-all duration-300 hover:scale-[1.02] border rounded-xl shadow-xl backdrop-blur-md bg-white/80 dark:bg-gray-800/80 border-gray-100 dark:border-gray-700"
                 >
-                  {/* Subtle overlay for glass effect, toned down for readability */}
-                  <div className="pointer-events-none absolute inset-0 rounded-xl z-0
-                    bg-gradient-to-br from-white/30 via-white/5 to-transparent
-                    dark:from-white/5 dark:via-black/10 dark:to-transparent" />
                   <div className="relative z-10 flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
                       <span className="text-lg">{skill.icon}</span>
-                      <span className="font-medium text-gray-900 dark:text-slate-100 text-sm">
+                      <span className="font-medium text-gray-900 dark:text-white text-sm">
                         {skill.name}
                       </span>
-                      <Badge className="ml-2 bg-blue-100 text-blue-700 dark:bg-black/40 dark:text-blue-200 dark:border dark:border-white/10">{category}</Badge>
+                      <Badge className="ml-2 bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-200 dark:border dark:border-white/10">{category}</Badge>
                     </div>
-                    <span className="text-sm font-semibold text-gray-600 dark:text-slate-200">
+                    <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
                       {skill.level}%
                     </span>
                   </div>

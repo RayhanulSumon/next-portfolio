@@ -5,7 +5,7 @@ import Skills from './Skills';
 
 const AboutSkills: React.FC = () => {
   return (
-    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+    <div className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 transition-colors duration-300">
       <div className="text-center mb-10">
         <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
           Technical Skills
