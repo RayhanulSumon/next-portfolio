@@ -13,38 +13,31 @@ import { useTheme } from 'next-themes';
 
 const Portfolio: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  // Featured project slugs to prioritize - match actual preview URLs
-  const featuredSlugs = [
-    'besttutor.xyz',
-    'bddti.com',
-    'admin.bddti.com',
-  ];
-
-  // Find featured projects by matching preview URLs correctly
-  const featuredProjects = portfolioData.filter(item => {
-    const preview = item.modalDetails?.[0]?.preview?.toLowerCase() || '';
-    const link = item.modalDetails?.[0]?.link?.toLowerCase() || '';
-    return featuredSlugs.some(slug =>
-      preview.includes(slug) || link.includes(slug)
-    );
-  });
-
-  // Remove featured projects from the rest
-  const otherProjects = portfolioData.filter(item => !featuredProjects.includes(item));
-
-  // Combine featured first, then others
-  const sortedProjects = [...featuredProjects, ...otherProjects];
-
-  // Filter by tag as before, but use sortedProjects
-  const filteredProjects = activeFilter === 'all'
-    ? sortedProjects
-    : sortedProjects.filter(item =>
+  // Filter by tag
+  const baseFilteredProjects = activeFilter === 'all'
+    ? portfolioData
+    : portfolioData.filter(item =>
         item.tag.some(t => t.toLowerCase() === activeFilter.toLowerCase())
       );
+
+  // Prioritize the last 3 projects to show first
+  const priorityProjects = baseFilteredProjects.filter(item =>
+    item.type === 'BestTutor.xyz' ||
+    item.type === 'BDDTI.com' ||
+    item.type === 'BDDTI Admin Panel'
+  );
+
+  const otherProjects = baseFilteredProjects.filter(item =>
+    item.type !== 'BestTutor.xyz' &&
+    item.type !== 'BDDTI.com' &&
+    item.type !== 'BDDTI Admin Panel'
+  );
+
+  // Combine priority projects first, then others
+  const filteredProjects = [...priorityProjects, ...otherProjects];
 
   // Helper to count projects by tag
   const filterByTag = (tag: string) =>
@@ -80,25 +73,26 @@ const Portfolio: React.FC = () => {
         {/* Projects Grid using shadcn/ui Card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((item) => {
-            // Improved image selection logic
-            let imageSrc = item.image; // Default fallback
+            // Use dark mode logic for both themes since dark mode is working
+            let imageSrc;
 
-            // After component is mounted, apply theme-based image selection
-            if (mounted) {
-              if (resolvedTheme === 'dark' && item.imageDark) {
-                // Use dark image if available in dark mode
-                imageSrc = item.imageDark;
-              } else if (resolvedTheme === 'light' && item.imageLight) {
-                // Use light image if available in light mode
-                imageSrc = item.imageLight;
-              } else if (item.imageLight) {
-                // Fallback to light image if no theme-specific image
-                imageSrc = item.imageLight;
-              }
+            if (mounted && item.imageDark) {
+              // Use dark image if available (works in dark mode)
+              imageSrc = item.imageDark;
+            } else if (mounted && item.imageLight) {
+              // Fallback to light image if dark not available
+              imageSrc = item.imageLight;
+            } else {
+              // Final fallback to base image
+              imageSrc = item.image;
             }
 
-            // Final fallback: if imageSrc is still undefined, use a placeholder
-            if (!imageSrc) imageSrc = '/images/portfolio/project-1.jpg';
+            // Safety fallback
+            if (!imageSrc) {
+              imageSrc = '/images/portfolio/project-1.jpg';
+            }
+
+
             return (
               <Dialog key={item.id}>
                 <Card className="group relative shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
