@@ -46,7 +46,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md">
+      <section className="py-20 bg-gradient-to-br from-white/70 via-blue-50/40 to-cyan-50/40 dark:from-gray-900/70 dark:via-blue-900/40 dark:to-cyan-900/40 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <AboutSkills />
         </div>
