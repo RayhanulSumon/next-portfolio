@@ -3,6 +3,8 @@ export interface PortfolioItem {
   id: number;
   type: string;
   image: string;
+  imageLight?: string;
+  imageDark?: string;
   tag: string[];
   delayAnimation: string;
   modalDetails: {
@@ -108,6 +110,60 @@ export const portfolioData: PortfolioItem[] = [
         language: "HTML, CSS, Javascript",
         preview: "www.rksumon.com",
         link: "https://www.rksumon.com",
+      },
+    ],
+  },
+  {
+    id: 100,
+    type: "BestTutor.xyz",
+    image: "/images/portfolio/besttutor_light.webp", // always fallback to light image
+    imageLight: "/images/portfolio/besttutor_light.webp",
+    imageDark: "/images/portfolio/besttutor_dark.webp",
+    tag: ["nextjs", "nodejs", "mongodb", "webrtc"],
+    delayAnimation: "0",
+    modalDetails: [
+      {
+        project: "Online Tutoring Marketplace",
+        client: "BestTutor",
+        language: "Next.js, Node.js, MongoDB, WebRTC",
+        preview: "besttutor.xyz",
+        link: "https://besttutor.xyz",
+      },
+    ],
+  },
+  {
+    id: 101,
+    type: "BDDTI.com",
+    image: "/images/portfolio/bddti_light.webp", // always fallback to light image
+    imageLight: "/images/portfolio/bddti_light.webp",
+    imageDark: "/images/portfolio/bddti_dark.webp",
+    tag: ["nextjs", "react", "tailwind"],
+    delayAnimation: "0",
+    modalDetails: [
+      {
+        project: "Driving Training Institute Website",
+        client: "BDDTI",
+        language: "Next.js, React, Tailwind CSS",
+        preview: "bddti.com",
+        link: "https://bddti.com",
+      },
+    ],
+  },
+  {
+    id: 102,
+    type: "BDDTI Admin Panel",
+    image: "/images/portfolio/bddti_light.webp", // always fallback to light image
+    imageLight: "/images/portfolio/bddti_light.webp",
+    imageDark: "/images/portfolio/bddti_dark.webp",
+    tag: ["nextjs", "react", "restapi"],
+    delayAnimation: "0",
+    modalDetails: [
+      {
+        project: "Admin Dashboard for BDDTI",
+        client: "BDDTI",
+        language: "Next.js, React, RESTful APIs",
+        preview: "admin.bddti.com",
+        link: "https://admin.bddti.com",
       },
     ],
   },

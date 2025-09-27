@@ -1,27 +1,56 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { portfolioData } from '@/lib/data/portfolioData';
-import { Dialog, DialogTrigger, DialogOverlay, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { useTheme } from 'next-themes';
 
 const Portfolio: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
-  // Filter portfolio items by tag
-  const filterByTag = (tag: string) => {
-    if (tag === 'all') return portfolioData;
-    return portfolioData.filter(item =>
+  // Featured project slugs to prioritize - match actual preview URLs
+  const featuredSlugs = [
+    'besttutor.xyz',
+    'bddti.com',
+    'admin.bddti.com',
+  ];
+
+  // Find featured projects by matching preview URLs correctly
+  const featuredProjects = portfolioData.filter(item => {
+    const preview = item.modalDetails?.[0]?.preview?.toLowerCase() || '';
+    const link = item.modalDetails?.[0]?.link?.toLowerCase() || '';
+    return featuredSlugs.some(slug =>
+      preview.includes(slug) || link.includes(slug)
+    );
+  });
+
+  // Remove featured projects from the rest
+  const otherProjects = portfolioData.filter(item => !featuredProjects.includes(item));
+
+  // Combine featured first, then others
+  const sortedProjects = [...featuredProjects, ...otherProjects];
+
+  // Filter by tag as before, but use sortedProjects
+  const filteredProjects = activeFilter === 'all'
+    ? sortedProjects
+    : sortedProjects.filter(item =>
+        item.tag.some(t => t.toLowerCase() === activeFilter.toLowerCase())
+      );
+
+  // Helper to count projects by tag
+  const filterByTag = (tag: string) =>
+    portfolioData.filter(item =>
       item.tag.some(t => t.toLowerCase() === tag.toLowerCase())
     );
-  };
-
-  const filteredProjects = filterByTag(activeFilter);
 
   const filterTabs = [
     { id: 'all', label: 'All Projects', count: portfolioData.length, color: 'from-blue-500 to-purple-500' },
@@ -50,82 +79,58 @@ const Portfolio: React.FC = () => {
 
         {/* Projects Grid using shadcn/ui Card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((item) => (
-            <Dialog key={item.id}>
-              <Card className="group relative shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.type}
-                    width={400}
-                    height={300}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <DialogTrigger asChild>
-                      <Button variant="secondary" size="lg">
-                        <span className="flex items-center gap-2">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                          View Project
-                        </span>
-                      </Button>
-                    </DialogTrigger>
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardTitle className="mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                    {item.type}
-                  </CardTitle>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {item.tag.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary">
-                        {tag.toUpperCase()}
-                      </Badge>
-                    ))}
-                  </div>
-                  {item.modalDetails && item.modalDetails.length > 0 && (
-                    <CardDescription>
-                      <p className="truncate">
-                        <span className="font-medium">Client:</span> {item.modalDetails[0].client}
-                      </p>
-                      {item.modalDetails[0].preview && (
-                        <p className="truncate mt-1">
-                          <span className="font-medium">Preview:</span> {item.modalDetails[0].preview}
-                        </p>
-                      )}
-                    </CardDescription>
-                  )}
-                </CardHeader>
-                {/* Modal Content using shadcn/ui Dialog */}
-                <DialogContent>
-                  {/* Accessible DialogTitle for screen readers, visually hidden */}
-                  <DialogTitle asChild>
-                    <VisuallyHidden>
-                      <h2>{item.type}</h2>
-                    </VisuallyHidden>
-                  </DialogTitle>
-                  <DialogClose asChild>
-                    <Button variant="outline" size="icon" className="absolute top-4 right-4">
-                      <span className="sr-only">Close</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </Button>
-                  </DialogClose>
-                  <div className="flex flex-col gap-4">
+          {filteredProjects.map((item) => {
+            // Improved image selection logic
+            let imageSrc = item.image; // Default fallback
+
+            // After component is mounted, apply theme-based image selection
+            if (mounted) {
+              if (resolvedTheme === 'dark' && item.imageDark) {
+                // Use dark image if available in dark mode
+                imageSrc = item.imageDark;
+              } else if (resolvedTheme === 'light' && item.imageLight) {
+                // Use light image if available in light mode
+                imageSrc = item.imageLight;
+              } else if (item.imageLight) {
+                // Fallback to light image if no theme-specific image
+                imageSrc = item.imageLight;
+              }
+            }
+
+            // Final fallback: if imageSrc is still undefined, use a placeholder
+            if (!imageSrc) imageSrc = '/images/portfolio/project-1.jpg';
+            return (
+              <Dialog key={item.id}>
+                <Card className="group relative shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                  <div className="relative h-64 overflow-hidden">
                     <Image
-                      src={item.image}
+                      src={imageSrc}
                       alt={item.type}
                       width={400}
                       height={300}
-                      className="w-full h-48 object-cover rounded-lg"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      suppressHydrationWarning
                     />
-                    <h2 className="text-xl font-bold mb-2">{item.type}</h2>
-                    <div className="flex flex-wrap gap-2 mb-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                      <DialogTrigger asChild>
+                        <Button variant="secondary" size="lg">
+                          <span className="flex items-center gap-2">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            View Project
+                          </span>
+                        </Button>
+                      </DialogTrigger>
+                    </div>
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                      {item.type}
+                    </CardTitle>
+                    <div className="flex flex-wrap gap-2 mb-3">
                       {item.tag.map((tag, tagIndex) => (
                         <Badge key={tagIndex} variant="secondary">
                           {tag.toUpperCase()}
@@ -133,23 +138,69 @@ const Portfolio: React.FC = () => {
                       ))}
                     </div>
                     {item.modalDetails && item.modalDetails.length > 0 && (
-                      <div className="space-y-2">
-                        <p><span className="font-medium">Project:</span> {item.modalDetails[0].project}</p>
-                        <p><span className="font-medium">Client:</span> {item.modalDetails[0].client}</p>
-                        <p><span className="font-medium">Language:</span> {item.modalDetails[0].language}</p>
+                      <CardDescription>
+                        <p className="truncate">
+                          <span className="font-medium">Client:</span> {item.modalDetails[0].client}
+                        </p>
                         {item.modalDetails[0].preview && (
-                          <p><span className="font-medium">Preview:</span> {item.modalDetails[0].preview}</p>
+                          <p className="truncate mt-1">
+                            <span className="font-medium">Preview:</span> {item.modalDetails[0].preview}
+                          </p>
                         )}
-                        {item.modalDetails[0].link && (
-                          <a href={item.modalDetails[0].link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Visit Site</a>
-                        )}
-                      </div>
+                      </CardDescription>
                     )}
-                  </div>
-                </DialogContent>
-              </Card>
-            </Dialog>
-          ))}
+                  </CardHeader>
+                  {/* Modal Content using shadcn/ui Dialog */}
+                  <DialogContent>
+                    {/* Accessible DialogTitle for screen readers, visually hidden */}
+                    <DialogTitle asChild>
+                      <VisuallyHidden>
+                        <h2>{item.type}</h2>
+                      </VisuallyHidden>
+                    </DialogTitle>
+                    <DialogClose asChild>
+                      <Button variant="outline" size="icon" className="absolute top-4 right-4">
+                        <span className="sr-only">Close</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </Button>
+                    </DialogClose>
+                    <div className="flex flex-col gap-4">
+                      <Image
+                        src={item.image}
+                        alt={item.type}
+                        width={400}
+                        height={300}
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                      <h2 className="text-xl font-bold mb-2">{item.type}</h2>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {item.tag.map((tag, tagIndex) => (
+                          <Badge key={tagIndex} variant="secondary">
+                            {tag.toUpperCase()}
+                          </Badge>
+                        ))}
+                      </div>
+                      {item.modalDetails && item.modalDetails.length > 0 && (
+                        <div className="space-y-2">
+                          <p><span className="font-medium">Project:</span> {item.modalDetails[0].project}</p>
+                          <p><span className="font-medium">Client:</span> {item.modalDetails[0].client}</p>
+                          <p><span className="font-medium">Language:</span> {item.modalDetails[0].language}</p>
+                          {item.modalDetails[0].preview && (
+                            <p><span className="font-medium">Preview:</span> {item.modalDetails[0].preview}</p>
+                          )}
+                          {item.modalDetails[0].link && (
+                            <a href={item.modalDetails[0].link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Visit Site</a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </DialogContent>
+                </Card>
+              </Dialog>
+            );
+          })}
         </div>
 
         {/* Empty State using shadcn/ui Card */}
