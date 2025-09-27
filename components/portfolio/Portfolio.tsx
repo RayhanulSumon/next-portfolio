@@ -162,7 +162,7 @@ const Portfolio: React.FC = () => {
                     </DialogClose>
                     <div className="flex flex-col gap-4">
                       <Image
-                        src={item.image}
+                        src={imageSrc}
                         alt={item.type}
                         width={400}
                         height={300}
