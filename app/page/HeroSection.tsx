@@ -181,7 +181,7 @@ export default function HeroSection() {
           transition={{ delay: 0.4, duration: 0.5 }}
         >
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-800 via-indigo-700 to-purple-800 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.4 }}
