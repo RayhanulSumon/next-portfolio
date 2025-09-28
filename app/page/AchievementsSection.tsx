@@ -26,13 +26,19 @@ const gridVariants = {
 	hidden: {},
 	visible: {
 		transition: {
-			staggerChildren: 0.15,
+			staggerChildren: 0.1,
 		},
 	},
 };
 const cardVariants = {
-	hidden: { opacity: 0, scale: 0.8, y: 30 },
-	visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6 } },
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.4,
+		}
+	},
 };
 
 const sectionGradient =
@@ -104,10 +110,10 @@ export default function AchievementsSection() {
 		<motion.section
 			id="achievements"
 			className={`relative py-24 flex items-center justify-center min-h-[70vh] ${sectionGradient} overflow-hidden border-t-4 border-indigo-200 dark:border-slate-800`}
-			initial={{ opacity: 0, y: 40 }}
+			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true, amount: 0.3 }}
-			transition={{ duration: 0.7, ease: 'easeOut' }}
+			transition={{ duration: 0.5 }}
 		>
 			<SectionDivider />
 			<Achievements3DBackground />
@@ -117,7 +123,7 @@ export default function AchievementsSection() {
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					transition={{ delay: 0.2, duration: 0.5 }}
+					transition={{ delay: 0.1, duration: 0.4 }}
 				>
 					Achievements
 				</motion.h2>
@@ -135,10 +141,14 @@ export default function AchievementsSection() {
 					{achievements.map((ach, idx) => (
 						<motion.li
 							key={ach.title}
-							className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-10 hover:scale-105 transition-transform backdrop-blur-xl border-2 border-indigo-200 dark:border-indigo-800 relative overflow-hidden group"
+							className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-10 backdrop-blur-xl border-2 border-indigo-200 dark:border-indigo-800 relative overflow-hidden group"
 							variants={cardVariants}
-							whileHover={{ scale: 1.07, boxShadow: '0 6px 32px #a5b4fc' }}
-							whileTap={{ scale: 0.97 }}
+							style={{ willChange: 'transform' }}
+							whileHover={{
+								y: -8,
+								transition: { duration: 0.2 }
+							}}
+							whileTap={{ scale: 0.98 }}
 						>
 							<span className="text-5xl mb-5 drop-shadow-lg group-hover:scale-110 transition-transform">
 								{ach.icon}
