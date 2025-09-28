@@ -42,13 +42,19 @@ const gridVariants = {
 	hidden: {},
 	visible: {
 		transition: {
-			staggerChildren: 0.15,
+			staggerChildren: 0.1,
 		},
 	},
 };
 const cardVariants = {
-	hidden: { opacity: 0, scale: 0.8, y: 30 },
-	visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6 } },
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.4,
+		}
+	},
 };
 
 export default function FeaturedProjectsSection() {
@@ -79,7 +85,12 @@ export default function FeaturedProjectsSection() {
 							<motion.div
 								key={idx}
 								variants={cardVariants}
-								className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-xl overflow-hidden flex flex-col min-h-[480px] transition-transform hover:-translate-y-2 hover:shadow-2xl border border-gray-200 dark:border-gray-800"
+								className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-xl overflow-hidden flex flex-col min-h-[480px] border border-gray-200 dark:border-gray-800"
+								style={{ willChange: 'transform' }}
+								whileHover={{
+									y: -8,
+									transition: { duration: 0.2 }
+								}}
 							>
 								<Image
 									src={imageSrc}
