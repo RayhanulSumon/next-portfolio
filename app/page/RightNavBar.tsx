@@ -96,7 +96,7 @@ export default function RightNavBar() {
         <div className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl overflow-hidden">
           <WaterBackground distortion={distortion} />
         </div>
-        <nav className="relative z-10 flex flex-col gap-6 w-full items-center justify-center backdrop-blur-xl bg-white/30 dark:bg-slate-950/30 border border-blue-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4">
+        <nav className="relative z-10 flex flex-col gap-6 w-full items-center justify-center backdrop-blur-xl bg-white/80 dark:bg-slate-950/30 border border-blue-300/60 dark:border-slate-800 rounded-2xl shadow-2xl p-4">
           {navItems.map((item) => (
             <motion.div
               key={item.label}
@@ -142,7 +142,7 @@ export default function RightNavBar() {
             >
               {/* Fluid background indicator */}
               <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-400/20 to-cyan-400/20 dark:from-blue-500/30 dark:to-cyan-500/30 backdrop-blur-sm"
+                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/30 to-cyan-500/30 dark:from-blue-500/30 dark:to-cyan-500/30 backdrop-blur-sm"
                 initial={false}
                 animate={active === item.href ? {
                   opacity: 1,
@@ -168,7 +168,7 @@ export default function RightNavBar() {
               <AnimatePresence>
                 {active === item.href && (
                   <motion.div
-                    className="absolute inset-0 rounded-2xl border-2 border-blue-400/50 dark:border-cyan-400/50"
+                    className="absolute inset-0 rounded-2xl border-2 border-blue-500/60 dark:border-cyan-400/50"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{
                       scale: [0.8, 1.2, 1],
@@ -188,10 +188,10 @@ export default function RightNavBar() {
                 type="button"
                 aria-label={`Go to ${item.label}`}
                 onClick={() => {
-                  setActive(item.href); // Set active immediately to hide other labels
+                  setActive(item.href);
                   scrollToSection(item.href);
                 }}
-                className="group relative flex flex-col items-center text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 bg-transparent border-none outline-none cursor-pointer py-3 px-3 rounded-xl transition-colors duration-300"
+                className="group relative flex flex-col items-center text-blue-700 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 bg-transparent border-none outline-none cursor-pointer py-3 px-3 rounded-xl transition-colors duration-300"
               >
                 <motion.div
                   animate={active === item.href ? {
@@ -219,7 +219,7 @@ export default function RightNavBar() {
                           type: "spring",
                           stiffness: 300,
                           damping: 20,
-                          delay: 0.15 // Slight delay to let tap animation complete
+                          delay: 0.15
                         }
                       }}
                       exit={{
@@ -227,10 +227,10 @@ export default function RightNavBar() {
                         y: -8,
                         scale: 0.8,
                         transition: {
-                          duration: 0.1 // Quick exit to prevent overlap
+                          duration: 0.1
                         }
                       }}
-                      className="text-[10px] mt-1 font-bold drop-shadow-lg text-blue-600 dark:text-cyan-400 absolute -bottom-1 pointer-events-none"
+                      className="text-[10px] mt-1 font-bold drop-shadow-lg text-blue-800 dark:text-cyan-400 absolute -bottom-1 pointer-events-none"
                     >
                       {item.label}
                     </motion.span>
