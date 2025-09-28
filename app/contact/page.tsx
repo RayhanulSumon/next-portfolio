@@ -13,100 +13,146 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Contact Content */}
-      <main className="pt-24">
+      <main className="pt-8">
         {/* Hero Section */}
-        <section className="py-16 relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 dark:bg-pink-900/20 rounded-full blur-3xl opacity-60"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-200 dark:bg-cyan-900/20 rounded-full blur-3xl opacity-60"></div>
-          </div>
-
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <section className="py-8 relative">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Page Title */}
-            <div className="text-center mb-16">
-              <div className="inline-block">
-                <h1 className="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-pink-600 via-cyan-600 to-blue-500 bg-clip-text text-transparent tracking-tight">
-                  Get In Touch
-                </h1>
-                <div className="w-24 h-1 bg-gradient-to-r from-pink-600 to-cyan-500 mx-auto rounded-full"></div>
-              </div>
-              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 max-w-4xl mx-auto leading-relaxed mt-6 font-medium">
-                Let&apos;s collaborate and bring your ideas to life
-              </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed mt-3">
-                Ready to work together? Drop me a message and let&apos;s create something amazing
+            <div className="text-center mb-10">
+              <h1 className="text-3xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-white">
+                Get In Touch
+              </h1>
+              <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full mb-4"></div>
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+                Let&apos;s discuss your next project or collaboration opportunity
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-              {/* Contact Info */}
-              <div className="space-y-8">
-                {/* Introduction Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-cyan-500 rounded-2xl flex items-center justify-center mr-4">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-6a2 2 0 012-2h2m-2-4h6a2 2 0 012 2v6a2 2 0 01-2 2H9l-4 4V8a2 2 0 012-2z" />
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Contact Information Cards */}
+              <div className="lg:col-span-1 space-y-4">
+                {/* Contact Details */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center mb-3">
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Let&apos;s Connect!
+                    <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                      Contact Information
                     </h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
-                    I&apos;m always excited to discuss new projects, creative ideas, or opportunities to be part of your vision. Whether you&apos;re looking for a developer, have a question, or just want to say hello, I&apos;d love to hear from you.
-                  </p>
-
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                      <div className="text-2xl font-bold text-pink-600 dark:text-pink-400">24h</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">Response Time</div>
-                    </div>
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                      <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">100%</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">Client Satisfaction</div>
-                    </div>
-                  </div>
-
-                  {/* Contact Information */}
-                  <div className="space-y-6">
-                    <Address />
-                    <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        Follow Me
-                      </h4>
-                      <Social />
-                    </div>
-                  </div>
+                  <Address />
                 </div>
 
-                {/* Availability Card */}
-                <div className="bg-gradient-to-br from-pink-50 to-cyan-50 dark:from-pink-900/20 dark:to-cyan-900/20 rounded-2xl p-6 border border-pink-200 dark:border-pink-800">
-                  <div className="flex items-center mb-4">
+                {/* Social Media */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center mb-3">
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </div>
+                    <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                      Follow Me
+                    </h3>
+                  </div>
+                  <Social />
+                </div>
+
+                {/* Availability Status */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center mb-2">
                     <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-                    <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Available for new projects
+                    <span className="text-base font-semibold text-gray-900 dark:text-white">
+                      Available for Projects
                     </span>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    I&apos;m currently accepting new freelance projects and collaborations. Let&apos;s discuss how we can work together!
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    Currently accepting new freelance projects and collaborations.
                   </p>
+                </div>
+
+                {/* Response Time */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div>
+                      <div className="text-xl font-bold text-blue-600 dark:text-blue-400">24h</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">Response Time</div>
+                    </div>
+                    <div>
+                      <div className="text-xl font-bold text-blue-600 dark:text-blue-400">100%</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">Satisfaction</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Contact Form */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    Send Me a Message
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Fill out the form below and I&apos;ll get back to you as soon as possible.
-                  </p>
+              <div className="lg:col-span-2">
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div className="mb-6">
+                    <div className="flex items-center mb-3">
+                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                        Send Me a Message
+                      </h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Fill out the form below and I&apos;ll get back to you within 24 hours.
+                    </p>
+                  </div>
+                  <Contact />
                 </div>
-                <Contact />
+              </div>
+            </div>
+
+            {/* Additional Information Section */}
+            <div className="mt-10">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                  Why Work With Me?
+                </h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Fast Delivery</h4>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Quick turnaround times without compromising quality
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quality Code</h4>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Clean, maintainable, and well-documented code
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Great Support</h4>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Ongoing support and clear communication throughout
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
