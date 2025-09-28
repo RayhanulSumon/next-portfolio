@@ -2,23 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { usePortfolio } from '@/lib/context/PortfolioContext';
-
-interface BlogPost {
-  id: number;
-  img: string;
-  title: string;
-  commentor: string;
-  date: string;
-  tag: string;
-  description1: string;
-  description2: string;
-  description3: string;
-  link?: string;
-}
+import { blogsData, BlogPost } from "@/lib/data/blogData";
 
 const Blog: React.FC = () => {
-  const { blogsData } = usePortfolio();
   const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
