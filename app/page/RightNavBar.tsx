@@ -71,9 +71,7 @@ export default function RightNavBar() {
           const minIdx = offsets.indexOf(Math.min(...offsets));
           const newActive = navItems[minIdx]?.href || 'hero';
 
-          if (newActive !== active) {
-            setActive(newActive);
-          }
+          setActive(newActive);
 
           ticking = false;
         });
@@ -83,7 +81,7 @@ export default function RightNavBar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [active]);
+  }, []); // Empty dependency array - this effect only needs to run once
 
   // Desktop sidebar only
   return (
@@ -189,7 +187,10 @@ export default function RightNavBar() {
               <button
                 type="button"
                 aria-label={`Go to ${item.label}`}
-                onClick={() => { scrollToSection(item.href); }}
+                onClick={() => {
+                  setActive(item.href); // Set active immediately to hide other labels
+                  scrollToSection(item.href);
+                }}
                 className="group relative flex flex-col items-center text-blue-600 dark:text-cyan-400 hover:text-blue-800 dark:hover:text-cyan-300 bg-transparent border-none outline-none cursor-pointer py-3 px-3 rounded-xl transition-colors duration-300"
               >
                 <motion.div
@@ -218,7 +219,7 @@ export default function RightNavBar() {
                           type: "spring",
                           stiffness: 300,
                           damping: 20,
-                          delay: 0.1
+                          delay: 0.15 // Slight delay to let tap animation complete
                         }
                       }}
                       exit={{
@@ -226,10 +227,10 @@ export default function RightNavBar() {
                         y: -8,
                         scale: 0.8,
                         transition: {
-                          duration: 0.2
+                          duration: 0.1 // Quick exit to prevent overlap
                         }
                       }}
-                      className="text-[10px] mt-1 font-bold drop-shadow-lg text-blue-600 dark:text-cyan-400 absolute -bottom-1"
+                      className="text-[10px] mt-1 font-bold drop-shadow-lg text-blue-600 dark:text-cyan-400 absolute -bottom-1 pointer-events-none"
                     >
                       {item.label}
                     </motion.span>
