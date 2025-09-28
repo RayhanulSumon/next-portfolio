@@ -20,6 +20,7 @@ const AboutHero: React.FC = () => {
                 height={288}
                 className="w-full h-full object-cover object-center"
                 priority
+                unoptimized={true}
               />
             </div>
           </div>
