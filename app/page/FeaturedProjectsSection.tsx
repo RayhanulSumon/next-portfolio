@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from "react";
 
 const featuredProjects = [
 	{
@@ -52,6 +53,12 @@ const cardVariants = {
 
 export default function FeaturedProjectsSection() {
 	const { resolvedTheme } = useTheme();
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
 	return (
 		<section className={`relative py-12 ${sectionGradient}`}>
 			<div className="container mx-auto px-4">
@@ -66,7 +73,8 @@ export default function FeaturedProjectsSection() {
 					viewport={{ once: true, amount: 0.2 }}
 				>
 					{featuredProjects.map((project, idx) => {
-						const imageSrc = resolvedTheme === 'dark' ? project.imageDark : project.imageLight;
+						const imageSrc = mounted && resolvedTheme === "dark" ? project.imageDark : project.imageLight;
+
 						return (
 							<motion.div
 								key={idx}
@@ -79,6 +87,8 @@ export default function FeaturedProjectsSection() {
 									width={600}
 									height={300}
 									className="h-64 w-full object-cover"
+									unoptimized
+									priority={idx === 0}
 								/>
 								<div className="p-6 flex-1 flex flex-col">
 									<h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">

@@ -167,6 +167,7 @@ export default function HeroSection() {
                 height={320}
                 className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2"
                 priority
+                unoptimized
               />
             </div>
             <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-0 group-hover:opacity-10 transition-all duration-300 z-[-1]" />
