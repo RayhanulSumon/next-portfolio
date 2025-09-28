@@ -132,17 +132,17 @@ export default function HeroSection() {
     <motion.section
       id="hero"
       className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-white to-blue-100 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
     >
       <Hero3DBackground />
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-10 relative z-10">
         <motion.div
           className="flex-shrink-0 flex justify-center items-center w-full md:w-auto"
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
           <motion.div
             ref={tiltRef}
@@ -150,7 +150,8 @@ export default function HeroSection() {
             style={{
               perspective: 1000,
               transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
-              transition: 'transform 0.25s cubic-bezier(.23,1.01,.32,1)',
+              transition: 'transform 0.2s ease-out',
+              willChange: 'transform',
             }}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
@@ -158,50 +159,72 @@ export default function HeroSection() {
             onTouchEnd={handleTouchEnd}
           >
             {/* Subtle animated ring effect with hover state */}
-            <span className="absolute -inset-[0px] sm:-inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-300" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-2 md:border-4 border-white dark:border-slate-800 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 group-hover:scale-110 transition-all duration-300 relative z-10">
+            <span className="absolute -inset-[0px] sm:-inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-200" />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-2 md:border-4 border-white dark:border-slate-800 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 transition-all duration-200 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
                 width={320}
                 height={320}
-                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2"
+                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-200"
                 priority
                 unoptimized
               />
             </div>
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-0 group-hover:opacity-10 transition-all duration-300 z-[-1]" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-0 group-hover:opacity-10 transition-all duration-200 z-[-1]" />
           </motion.div>
         </motion.div>
         <motion.div
           className="text-center md:text-left max-w-2xl"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md">
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+          >
             Hi, I&apos;m <span className="inline-block">Rayhanul Sumon</span>
-          </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-700 dark:text-cyan-300 mb-3 tracking-wide leading-snug">
+          </motion.h1>
+          <motion.h2
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-700 dark:text-cyan-300 mb-3 tracking-wide leading-snug"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+          >
             Full Stack Web Developer
-          </h2>
-          <p className="prose prose-blue dark:prose-invert text-base sm:text-lg md:text-xl font-normal text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          </motion.h2>
+          <motion.p
+            className="prose prose-blue dark:prose-invert text-base sm:text-lg md:text-xl font-normal text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.4 }}
+          >
             I&apos;m passionate about creating amazing digital experiences with <span className='font-semibold text-blue-600 dark:text-cyan-400'>React</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Next.js</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Laravel</span>, and modern web technologies. I love building fast, accessible, and beautiful web apps.
-          </p>
-          <div className="flex gap-4 justify-center md:justify-start mt-2">
+          </motion.p>
+          <motion.div
+            className="flex gap-4 justify-center md:justify-start mt-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
+          >
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-7 py-2.5 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-bold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition text-base sm:text-lg tracking-wide"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.15 }}
+              className="px-7 py-2.5 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-bold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors duration-200 text-base sm:text-lg tracking-wide"
             >Contact Me</motion.a>
             <motion.a
               href="/images/cv.webp" download
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-7 py-2.5 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-bold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition text-base sm:text-lg tracking-wide"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.15 }}
+              className="px-7 py-2.5 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-bold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition-colors duration-200 text-base sm:text-lg tracking-wide"
             >Download CV</motion.a>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>
