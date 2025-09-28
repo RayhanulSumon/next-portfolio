@@ -66,7 +66,7 @@ export default function FeaturedProjectsSection() {
 	}, []);
 
 	return (
-		<section className={`relative py-12 ${sectionGradient}`}>
+		<section id="featured-projects" className={`relative py-12 ${sectionGradient}`}>
 			<div className="container mx-auto px-4">
 				<h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
 					Featured Projects

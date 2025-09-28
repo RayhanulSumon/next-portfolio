@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { FaTools, FaTrophy, FaHome } from 'react-icons/fa';
+import { FaTools, FaTrophy, FaHome, FaProjectDiagram } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Plane, MeshDistortMaterial } from '@react-three/drei';
@@ -33,7 +33,8 @@ function WaterBackground({ distortion }: { distortion: number }) {
 
 const navItems = [
   { href: 'hero', icon: <FaHome size={28} />, label: 'Home' },
-  { href: 'skills', icon: <FaTools size={28} />, label: 'Skills' },
+    { href: 'skills', icon: <FaTools size={28} />, label: 'Skills' },
+    { href: 'featured-projects', icon: <FaProjectDiagram size={28} />, label: 'Projects' },
   { href: 'achievements', icon: <FaTrophy size={28} />, label: 'Achievements' },
 ];
 
