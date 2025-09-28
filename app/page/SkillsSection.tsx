@@ -10,8 +10,19 @@ const gridVariants = {
 	hidden: {},
 	visible: {
 		transition: {
-			staggerChildren: 0.07,
+			staggerChildren: 0.1,
 		},
+	},
+};
+
+const cardVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.4,
+		}
 	},
 };
 
@@ -47,17 +58,18 @@ const Skills3DBackground = React.memo(function Skills3DBackground() {
 function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode } }) {
 	return (
 		<motion.div
-			className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-8 hover:scale-105 transition-transform backdrop-blur-xl border-2 border-sky-200 dark:border-fuchsia-800 relative overflow-hidden group"
-			initial={{ opacity: 0, rotateY: 15 }}
-			whileInView={{ opacity: 1, rotateY: 0 }}
-			viewport={{ once: true }}
-			transition={{ duration: 0.5, ease: 'easeOut' }}
-			style={{ willChange: 'transform, opacity', backfaceVisibility: 'hidden' }}
+			className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 border-sky-200 dark:border-fuchsia-800 relative overflow-hidden group"
+			variants={cardVariants}
+			style={{ willChange: 'transform' }}
+			whileHover={{
+				y: -8,
+				transition: { duration: 0.2 }
+			}}
 		>
-			<span className="text-5xl mb-4 drop-shadow-lg group-hover:scale-110 transition-transform">{skill.icon}</span>
+			<span className="text-5xl mb-4 drop-shadow-lg group-hover:scale-110 transition-transform duration-200">{skill.icon}</span>
 			<span className="font-bold text-lg md:text-xl text-sky-700 dark:text-fuchsia-300 text-center tracking-wide">{skill.name}</span>
 			{/* Accent bar */}
-			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 bg-gradient-to-r from-fuchsia-400 via-sky-400 to-cyan-400 rounded-full opacity-70 group-hover:opacity-100 transition-all" />
+			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 bg-gradient-to-r from-fuchsia-400 via-sky-400 to-cyan-400 rounded-full opacity-70 group-hover:opacity-100 transition-all duration-200" />
 		</motion.div>
 	);
 }
@@ -81,19 +93,20 @@ export default function SkillsSection() {
 		<motion.section
 			id="skills"
 			className={`relative py-24 flex items-center justify-center min-h-[65vh] ${sectionGradient} overflow-hidden border-t-4 border-slate-300 dark:border-slate-800`}
-			initial={{ opacity: 0, y: 40 }}
+			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			transition={{ duration: 0.8, ease: 'easeOut' }}
+			transition={{ duration: 0.5 }}
 		>
 			<SectionDivider />
 			<Skills3DBackground />
 			<div className="container mx-auto px-4 flex flex-col items-center justify-center z-10">
 				<motion.h2
 					className="text-5xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-fuchsia-500 to-cyan-400 dark:from-cyan-400 dark:via-sky-400 dark:to-fuchsia-400 text-center drop-shadow-xl tracking-tight"
-					initial={{ opacity: 0, y: 30 }}
+					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2, duration: 0.7 }}
+					viewport={{ once: true }}
+					transition={{ delay: 0.1, duration: 0.4 }}
 				>
 					Skills
 				</motion.h2>
@@ -102,7 +115,6 @@ export default function SkillsSection() {
 				</p>
 				<motion.div
 					className="grid grid-cols-2 sm:grid-cols-4 gap-10 w-full"
-					style={{ perspective: 1200 }}
 					variants={gridVariants}
 					initial="hidden"
 					whileInView="visible"
