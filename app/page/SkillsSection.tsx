@@ -72,7 +72,7 @@ function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; co
 				{skill.icon}
 				<span className={`absolute inset-0 rounded-full blur-xl opacity-30 group-hover:opacity-50`} style={{ background: skill.color }} />
 			</span>
-			<span className={`font-bold text-lg md:text-xl text-center tracking-wide dark:text-[${skill.darkColor}]`} style={{ color: skill.color }}>
+			<span className={`font-bold text-lg md:text-xl text-center tracking-wide text-[${skill.color}] dark:text-[${skill.darkColor}]`}>
 				{skill.name}
 			</span>
 			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 rounded-full opacity-70 group-hover:opacity-100 transition-all duration-200" style={{ background: `linear-gradient(90deg, ${skill.color} 0%, #fff 100%)` }} />
