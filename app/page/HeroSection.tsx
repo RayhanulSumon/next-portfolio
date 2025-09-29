@@ -272,13 +272,13 @@ export default function HeroSection() {
   return (
     <motion.section
       id="hero"
-      className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 relative overflow-hidden"
+      className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 relative overflow-hidden "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <Hero3DBackground />
-      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10">
+      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10 mt-8 md:mt-0">
         <motion.div
           className="flex-shrink-0 flex justify-center items-center w-full lg:w-auto order-1 lg:order-1"
           initial={{ opacity: 0, x: -50 }}
