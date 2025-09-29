@@ -94,7 +94,7 @@ export default function HeroSection() {
   // 3D tilt effect state/logic
   const tiltRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, scale: 1 });
-  const maxTilt = 25; // reduced for subtler effect
+  const maxTilt = 45; // increased from 25 for more dramatic effect
 
   function handlePointerMove(e: MouseEvent<HTMLDivElement>) {
     const node = tiltRef.current;
@@ -104,10 +104,10 @@ export default function HeroSection() {
     const y = e.clientY - rect.top;
     const px = x / rect.width;
     const py = y / rect.height;
-    // Centered at 0,0
+    // Centered at 0,0 with more dramatic tilt
     const tiltX = (py - 0.5) * -2 * maxTilt;
     const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.08 });
+    setTilt({ x: tiltX, y: tiltY, scale: 1.15 }); // increased scale from 1.08 to 1.15
   }
   function handlePointerLeave() {
     setTilt({ x: 0, y: 0, scale: 1 });
@@ -124,7 +124,7 @@ export default function HeroSection() {
     const py = y / rect.height;
     const tiltX = (py - 0.5) * -2 * maxTilt;
     const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.08 });
+    setTilt({ x: tiltX, y: tiltY, scale: 1.15 }); // increased scale
   }
   function handleTouchEnd() {
     setTilt({ x: 0, y: 0, scale: 1 });
