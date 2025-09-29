@@ -160,9 +160,10 @@ export default function HeroSection() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Color-changing border using existing hero-ring animation */}
-            <span className="absolute -inset-px rounded-3xl z-0 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-sm opacity-10 md:opacity-25 group-hover:opacity-20 md:group-hover:opacity-40 animate-hero-ring group-hover:animate-hero-ring-fast transition-opacity duration-200" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl border-3 border-white/80 dark:border-slate-800/80 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-300 relative z-10">
+            {/* Ultra-subtle premium border */}
+            <span className="absolute -inset-px rounded-3xl bg-gradient-to-r from-blue-500/5 via-cyan-400/5 to-blue-600/5 dark:from-blue-400/8 dark:via-cyan-300/8 dark:to-blue-500/8 blur-sm group-hover:blur-sm group-hover:from-blue-500/12 group-hover:via-cyan-400/12 group-hover:to-blue-600/12 dark:group-hover:from-blue-400/15 dark:group-hover:via-cyan-300/15 dark:group-hover:to-blue-500/15 transition-all duration-700" />
+
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl border border-white/95 dark:border-slate-800/95 group-hover:border-blue-100/30 dark:group-hover:border-cyan-500/20 group-hover:shadow-blue-500/10 dark:group-hover:shadow-cyan-400/10 transition-all duration-700 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
@@ -247,7 +248,7 @@ export default function HeroSection() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  Let's Talk
+                  Let&apos;s Talk
                 </Link>
               </div>
             </motion.div>
