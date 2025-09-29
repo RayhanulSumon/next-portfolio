@@ -148,7 +148,7 @@ export default function HeroSection() {
         >
           <motion.div
             ref={tiltRef}
-            className="relative group rounded-3xl p-3 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl"
+            className="relative group rounded-3xl p-1 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl"
             style={{
               perspective: 1000,
               transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
@@ -160,16 +160,25 @@ export default function HeroSection() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Ultra-subtle premium border */}
-            <span className="absolute -inset-px rounded-3xl bg-gradient-to-r from-blue-500/5 via-cyan-400/5 to-blue-600/5 dark:from-blue-400/8 dark:via-cyan-300/8 dark:to-blue-500/8 blur-sm group-hover:blur-sm group-hover:from-blue-500/12 group-hover:via-cyan-400/12 group-hover:to-blue-600/12 dark:group-hover:from-blue-400/15 dark:group-hover:via-cyan-300/15 dark:group-hover:to-blue-500/15 transition-all duration-700" />
+            {/* 3D layered border effect */}
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-blue-400/20 via-cyan-300/20 to-blue-500/20 dark:from-blue-600/30 dark:via-cyan-500/30 dark:to-blue-700/30 blur-sm group-hover:blur-md transition-all duration-500" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-500/10 via-cyan-400/10 to-blue-600/10 dark:from-blue-700/20 dark:via-cyan-600/20 dark:to-blue-800/20 blur-md group-hover:blur-lg transition-all duration-500" />
 
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl border border-white/95 dark:border-slate-800/95 group-hover:border-blue-100/30 dark:group-hover:border-cyan-500/20 group-hover:shadow-blue-500/10 dark:group-hover:shadow-cyan-400/10 transition-all duration-700 relative z-10">
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl relative z-10 group-hover:shadow-blue-500/20 dark:group-hover:shadow-cyan-400/20 transition-all duration-500"
+                 style={{
+                   boxShadow: `
+                     0 4px 20px rgba(0, 0, 0, 0.1),
+                     0 1px 3px rgba(0, 0, 0, 0.08),
+                     inset 0 1px 0 rgba(255, 255, 255, 0.1)
+                   `
+                 }}>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-black/5 dark:from-white/5 dark:via-transparent dark:to-black/10 pointer-events-none" />
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
                 width={400}
                 height={400}
-                className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105"
+                className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105 relative z-10"
                 priority
               />
             </div>
