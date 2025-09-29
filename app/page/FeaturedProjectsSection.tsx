@@ -36,7 +36,7 @@ const featuredProjects = [
 ];
 
 const sectionGradient =
-	'bg-gradient-to-br from-teal-100 via-purple-100 to-indigo-200 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-900';
+  'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-900';
 
 const gridVariants = {
 	hidden: {},
