@@ -6,6 +6,8 @@ import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import React, { useRef, useEffect, useState, MouseEvent } from 'react';
 import { Mesh, SphereGeometry, Material, MeshStandardMaterial } from 'three';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { motion as motionLink } from 'framer-motion';
 
 interface DistortMaterial extends Material {
   distort: number;
@@ -210,13 +212,14 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.4 }}
           >
-            <motion.a
-              href="#contact"
+            <motionLink.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.15 }}
               className="px-7 py-2.5 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-bold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors duration-200 text-base sm:text-lg tracking-wide"
-            >Contact Me</motion.a>
+            >
+              <Link href="/contact" className="block w-full h-full">Contact Me</Link>
+            </motionLink.div>
             <motion.a
               href="/images/cv.webp" download
               whileHover={{ scale: 1.05 }}
