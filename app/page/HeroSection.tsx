@@ -94,7 +94,7 @@ export default function HeroSection() {
   // 3D tilt effect state/logic
   const tiltRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, scale: 1 });
-  const maxTilt = 35; // degrees (increased for more 3D effect)
+  const maxTilt = 25; // reduced for subtler effect
 
   function handlePointerMove(e: MouseEvent<HTMLDivElement>) {
     const node = tiltRef.current;
@@ -107,7 +107,7 @@ export default function HeroSection() {
     // Centered at 0,0
     const tiltX = (py - 0.5) * -2 * maxTilt;
     const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.12 });
+    setTilt({ x: tiltX, y: tiltY, scale: 1.08 });
   }
   function handlePointerLeave() {
     setTilt({ x: 0, y: 0, scale: 1 });
@@ -124,7 +124,7 @@ export default function HeroSection() {
     const py = y / rect.height;
     const tiltX = (py - 0.5) * -2 * maxTilt;
     const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.12 });
+    setTilt({ x: tiltX, y: tiltY, scale: 1.08 });
   }
   function handleTouchEnd() {
     setTilt({ x: 0, y: 0, scale: 1 });
@@ -133,26 +133,26 @@ export default function HeroSection() {
   return (
     <motion.section
       id="hero"
-      className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-white to-blue-100 dark:from-slate-950 dark:to-slate-900 relative overflow-hidden"
+      className="min-h-[calc(100svh-64px)] md:min-h-[calc(100vh-64px)] flex items-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.8 }}
     >
       <Hero3DBackground />
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-10 relative z-10">
+      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10">
         <motion.div
-          className="flex-shrink-0 flex justify-center items-center w-full md:w-auto"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          className="flex-shrink-0 flex justify-center items-center w-full lg:w-auto order-2 lg:order-1"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 0.7, type: "spring", stiffness: 100 }}
         >
           <motion.div
             ref={tiltRef}
-            className="relative group rounded-3xl p-2 bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 shadow-2xl"
+            className="relative group rounded-3xl p-3 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl"
             style={{
               perspective: 1000,
               transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
-              transition: 'transform 0.2s ease-out',
+              transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               willChange: 'transform',
             }}
             onPointerMove={handlePointerMove}
@@ -160,73 +160,148 @@ export default function HeroSection() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Subtle animated ring effect with hover state */}
-            <span className="absolute -inset-[0px] sm:-inset-0.5 rounded-3xl z-0 animate-hero-ring bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-[1px] opacity-10 group-hover:blur-xs group-hover:opacity-20 group-hover:animate-hero-ring-fast transition-all duration-200" />
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-xl border-2 md:border-4 border-white dark:border-slate-800 group-hover:shadow-blue-900/40 dark:group-hover:shadow-cyan-500/40 transition-all duration-200 relative z-10">
+            {/* Enhanced animated ring effect */}
+            <motion.span
+              className="absolute -inset-1 rounded-3xl z-0 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 blur-lg opacity-30 group-hover:opacity-60 group-hover:blur-xl transition-all duration-300"
+              animate={{
+                scale: [1, 1.05, 1],
+                opacity: [0.3, 0.5, 0.3]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl border-3 border-white/80 dark:border-slate-800/80 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
-                width={320}
-                height={320}
-                className="object-cover w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 transition-transform duration-200"
+                width={400}
+                height={400}
+                className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105"
                 priority
-                unoptimized
               />
             </div>
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-none opacity-0 group-hover:opacity-10 transition-all duration-200 z-[-1]" />
           </motion.div>
         </motion.div>
+
         <motion.div
-          className="text-center md:text-left max-w-2xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          className="text-center lg:text-left max-w-3xl order-1 lg:order-2"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.7, type: "spring", stiffness: 100 }}
         >
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-5 bg-gradient-to-r from-blue-800 via-indigo-700 to-purple-800 dark:from-blue-300 dark:to-cyan-400 bg-clip-text text-transparent drop-shadow-md"
-            initial={{ opacity: 0, y: 20 }}
+          {/* Enhanced greeting */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 mb-6 shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
           >
-            Hi, I&apos;m <span className="inline-block">Rayhanul Sumon</span>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Available for new projects</span>
+          </motion.div>
+
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 dark:from-white dark:via-blue-200 dark:to-cyan-300 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            Hi, I&apos;m{' '}
+            <motion.span
+              className="inline-block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              Rayhanul Sumon
+            </motion.span>
           </motion.h1>
+
           <motion.h2
-            className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-700 dark:text-cyan-300 mb-3 tracking-wide leading-snug"
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-700 dark:text-cyan-300 mb-4 tracking-wide"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.4 }}
+            transition={{ delay: 1.0, duration: 0.5 }}
           >
             Full Stack Web Developer
           </motion.h2>
+
           <motion.p
-            className="prose prose-blue dark:prose-invert text-base sm:text-lg md:text-xl font-normal text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl font-medium text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.4 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
           >
-            I&apos;m passionate about creating amazing digital experiences with <span className='font-semibold text-blue-600 dark:text-cyan-400'>React</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Next.js</span>, <span className='font-semibold text-blue-600 dark:text-cyan-400'>Laravel</span>, and modern web technologies. I love building fast, accessible, and beautiful web apps.
+            I&apos;m passionate about creating amazing digital experiences with{' '}
+            <span className='font-bold text-blue-600 dark:text-cyan-400 hover:underline cursor-default'>React</span>,{' '}
+            <span className='font-bold text-blue-600 dark:text-cyan-400 hover:underline cursor-default'>Next.js</span>,{' '}
+            <span className='font-bold text-blue-600 dark:text-cyan-400 hover:underline cursor-default'>Laravel</span>, and modern web technologies.
           </motion.p>
+
           <motion.div
-            className="flex gap-4 justify-center md:justify-start mt-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.4 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
           >
-            <motionLink.div
-              whileHover={{ scale: 1.05 }}
+            <motion.div
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              className="px-7 py-2.5 bg-blue-600 dark:bg-blue-700 text-white rounded-lg font-bold shadow hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors duration-200 text-base sm:text-lg tracking-wide"
+              transition={{ duration: 0.2 }}
+              className="group relative"
             >
-              <Link href="/contact" className="block w-full h-full">Contact Me</Link>
-            </motionLink.div>
-            <motion.a
-              href="/images/cv.webp" download
-              whileHover={{ scale: 1.05 }}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+              <div className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                <Link href="/contact" className="flex items-center justify-center gap-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Let's Talk
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              className="px-7 py-2.5 bg-cyan-500 dark:bg-cyan-600 text-white rounded-lg font-bold shadow hover:bg-cyan-600 dark:hover:bg-cyan-700 transition-colors duration-200 text-base sm:text-lg tracking-wide"
-            >Download CV</motion.a>
+              transition={{ duration: 0.2 }}
+              className="group relative"
+            >
+              <motion.a
+                href="/images/cv.webp"
+                download
+                className="relative flex items-center justify-center gap-3 px-8 py-4 bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 rounded-xl font-bold text-lg border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-cyan-400 shadow-lg hover:shadow-xl backdrop-blur-sm transition-all duration-200"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download CV
+              </motion.a>
+            </motion.div>
+          </motion.div>
+
+          {/* Tech stack preview */}
+          <motion.div
+            className="flex flex-wrap justify-center lg:justify-start gap-3 mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.6, duration: 0.5 }}
+          >
+            <span className="text-sm text-gray-500 dark:text-gray-400 mr-2">Tech Stack:</span>
+            {['React', 'Next.js', 'TypeScript', 'Laravel', 'Node.js'].map((tech, idx) => (
+              <motion.span
+                key={tech}
+                className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.8 + idx * 0.1 }}
+                whileHover={{ scale: 1.05, y: -1 }}
+              >
+                {tech}
+              </motion.span>
+            ))}
           </motion.div>
         </motion.div>
       </div>
