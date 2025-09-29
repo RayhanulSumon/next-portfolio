@@ -91,28 +91,52 @@ export default function FeaturedProjectsSection() {
 							<motion.div
 								key={idx}
 								variants={cardVariants}
-								className={`relative rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[480px] border-0 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl group transition-all duration-200 hover:scale-[1.03] hover:shadow-3xl`}
-								style={{ willChange: 'transform' }}
+								className={`relative rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[480px] border-0 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl group`}
+								style={{
+									willChange: 'transform, box-shadow',
+								}}
 								whileHover={{
-									y: -10,
-									scale: 1.03,
-									boxShadow: '0 8px 40px 0 rgba(56,189,248,0.15)',
-									transition: { duration: 0.2 }
+									y: -8,
+									scale: 1.02,
+									boxShadow: '0 20px 60px 0 rgba(56,189,248,0.2)',
+									transition: {
+										type: "spring",
+										stiffness: 300,
+										damping: 30,
+										duration: 0.15
+									}
+								}}
+								whileTap={{ scale: 0.98 }}
+								transition={{
+									type: "spring",
+									stiffness: 400,
+									damping: 40
 								}}
 							>
 								{/* Accent bar */}
-								<span className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${accent} opacity-70 group-hover:opacity-100 transition-all duration-200`} />
+								<motion.span
+									className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${accent}`}
+									initial={{ opacity: 0.7 }}
+									whileHover={{ opacity: 1 }}
+									transition={{ duration: 0.2 }}
+								/>
 								{/* Project Image */}
-								<div className="relative w-full h-64">
-									<Image
-										src={imageSrc}
-										alt={project.title}
-										fill
-										sizes="(max-width: 768px) 100vw, 33vw"
-										className="object-cover rounded-t-3xl"
-										priority={idx === 0}
-                                        unoptimized={true}
-									/>
+								<div className="relative w-full h-64 overflow-hidden">
+									<motion.div
+										whileHover={{ scale: 1.05 }}
+										transition={{ duration: 0.3, ease: "easeOut" }}
+										className="w-full h-full"
+									>
+										<Image
+											src={imageSrc}
+											alt={project.title}
+											fill
+											sizes="(max-width: 768px) 100vw, 33vw"
+											className="object-cover"
+											priority={idx === 0}
+											unoptimized={true}
+										/>
+									</motion.div>
 								</div>
 								{/* Card Content */}
 								<div className="p-6 flex-1 flex flex-col">
