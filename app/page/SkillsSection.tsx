@@ -27,7 +27,7 @@ const cardVariants = {
 };
 
 const sectionGradient =
-	"bg-gradient-to-br from-cyan-100 via-sky-100 to-fuchsia-100 dark:from-slate-900 dark:via-slate-950 dark:to-sky-900";
+  "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-950 dark:to-sky-900";
 
 function SectionDivider() {
 	return (
