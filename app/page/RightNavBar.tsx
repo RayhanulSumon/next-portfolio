@@ -146,6 +146,7 @@ export default function RightNavBar() {
 
   // Handle rotation animations with proper cleanup
   useEffect(() => {
+    const mounted = { current: true };
     const currentControl = rotationControls[active as keyof typeof rotationControls];
     const previousControl = rotationControls[previousActive as keyof typeof rotationControls];
 
@@ -153,9 +154,11 @@ export default function RightNavBar() {
       // Stop previous rotation and reset to 0
       if (previousControl && previousActive !== active) {
         previousControl.stop();
-        previousControl.set({ rotateY: 0 });
+        // Only call set if mounted
+        if (mounted.current) {
+          previousControl.set({ rotateY: 0 });
+        }
       }
-
       // Start new rotation for active item
       currentControl.start({
         rotateY: [0, 360],
@@ -168,10 +171,12 @@ export default function RightNavBar() {
     }
 
     return () => {
-      // Cleanup: stop all rotations and reset positions
+      mounted.current = false;
+      // Cleanup: stop all rotations, do not call set()
       Object.values(rotationControls).forEach((control) => {
-        control.stop();
-        control.set({ rotateY: 0 });
+        if (control && typeof control.stop === 'function') {
+          control.stop();
+        }
       });
     };
   }, [active, previousActive, rotationControls]);
