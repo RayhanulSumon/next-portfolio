@@ -141,7 +141,7 @@ export default function HeroSection() {
       <Hero3DBackground />
       <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10">
         <motion.div
-          className="flex-shrink-0 flex justify-center items-center w-full lg:w-auto order-2 lg:order-1"
+          className="flex-shrink-0 flex justify-center items-center w-full lg:w-auto order-1 lg:order-1"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.7, type: "spring", stiffness: 100 }}
@@ -187,7 +187,7 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="text-center lg:text-left max-w-3xl order-1 lg:order-2"
+          className="text-center lg:text-left max-w-3xl order-2 lg:order-2"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5, duration: 0.7, type: "spring", stiffness: 100 }}
