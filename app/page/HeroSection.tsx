@@ -147,7 +147,9 @@ export default function HeroSection() {
   const tiltRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, scale: 1 });
   const isAnimating = useRef(false);
-  const maxTilt = 45;
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  const maxTilt = isMobile ? 15 : 45;
+  const lastTouchTime = useRef(0);
 
   // Memoize style calculations for better performance
   const tiltStyles = useMemo(() => {
@@ -205,7 +207,6 @@ export default function HeroSection() {
   // Throttled pointer move handler for better performance
   const handlePointerMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
     if (isAnimating.current) return;
-
     isAnimating.current = true;
     requestAnimationFrame(() => {
       const node = tiltRef.current;
@@ -213,16 +214,13 @@ export default function HeroSection() {
         isAnimating.current = false;
         return;
       }
-
       const rect = node.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const px = x / rect.width;
       const py = y / rect.height;
-
       const tiltX = (py - 0.5) * -2 * maxTilt;
       const tiltY = (px - 0.5) * 2 * maxTilt;
-
       setTilt({ x: tiltX, y: tiltY, scale: 1.15 });
       isAnimating.current = false;
     });
@@ -233,8 +231,10 @@ export default function HeroSection() {
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const now = Date.now();
+    if (now - lastTouchTime.current < 16) return; // throttle to ~60fps
+    lastTouchTime.current = now;
     if (isAnimating.current) return;
-
     isAnimating.current = true;
     requestAnimationFrame(() => {
       const node = tiltRef.current;
@@ -242,23 +242,19 @@ export default function HeroSection() {
         isAnimating.current = false;
         return;
       }
-
       const rect = node.getBoundingClientRect();
       const touch = e.touches[0];
       if (!touch) {
         isAnimating.current = false;
         return;
       }
-
       const x = touch.clientX - rect.left;
       const y = touch.clientY - rect.top;
       const px = x / rect.width;
       const py = y / rect.height;
-
       const tiltX = (py - 0.5) * -2 * maxTilt;
       const tiltY = (px - 0.5) * 2 * maxTilt;
-
-      setTilt({ x: tiltX, y: tiltY, scale: 1.15 });
+      setTilt({ x: tiltX, y: tiltY, scale: 1.10 }); // slightly less scale for mobile
       isAnimating.current = false;
     });
   }, [maxTilt]);
