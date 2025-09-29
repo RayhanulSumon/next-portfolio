@@ -55,21 +55,27 @@ const Skills3DBackground = React.memo(function Skills3DBackground() {
 	);
 });
 
-function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode } }) {
+function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; color: string } }) {
 	return (
 		<motion.div
-			className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 border-slate-200 dark:border-slate-700 relative overflow-hidden group"
+			className={`flex flex-col items-center rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 relative overflow-hidden group bg-white/70 dark:bg-slate-900/70 border-[${skill.color}]`}
 			variants={cardVariants}
-			style={{ willChange: 'transform' }}
+			style={{ willChange: 'transform', boxShadow: `0 4px 32px 0 ${skill.color}33` }}
 			whileHover={{
-				y: -8,
+				y: -12,
+				scale: 1.04,
+				boxShadow: `0 8px 40px 0 ${skill.color}66`,
 				transition: { duration: 0.2 }
 			}}
 		>
-			<span className="text-5xl mb-4 drop-shadow-lg group-hover:scale-110 transition-transform duration-200">{skill.icon}</span>
-			<span className="font-bold text-lg md:text-xl text-sky-700 dark:text-fuchsia-300 text-center tracking-wide">{skill.name}</span>
-			{/* Accent bar */}
-			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 bg-gradient-to-r from-fuchsia-400 via-sky-400 to-cyan-400 rounded-full opacity-70 group-hover:opacity-100 transition-all duration-200" />
+			<span className="text-6xl mb-4 drop-shadow-lg group-hover:scale-110 transition-transform duration-200 relative">
+				{skill.icon}
+				<span className={`absolute inset-0 rounded-full blur-xl opacity-30 group-hover:opacity-50`} style={{ background: skill.color }} />
+			</span>
+			<span className={`font-bold text-lg md:text-xl text-center tracking-wide`} style={{ color: skill.color }}>
+				{skill.name}
+			</span>
+			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 rounded-full opacity-70 group-hover:opacity-100 transition-all duration-200" style={{ background: `linear-gradient(90deg, ${skill.color} 0%, #fff 100%)` }} />
 		</motion.div>
 	);
 }
@@ -77,14 +83,14 @@ function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode } }
 export default function SkillsSection() {
 	const skills = React.useMemo(
 		() => [
-			{ name: 'JavaScript', icon: <FaJsSquare className="text-yellow-400" /> },
-			{ name: 'TypeScript', icon: <SiTypescript className="text-blue-500" /> },
-			{ name: 'React', icon: <FaReact className="text-cyan-400" /> },
-			{ name: 'Next.js', icon: <SiNextdotjs className="text-gray-800 dark:text-white" /> },
-			{ name: 'Laravel', icon: <SiLaravel className="text-red-500" /> },
-			{ name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-500" /> },
-			{ name: 'Node.js', icon: <FaNodeJs className="text-green-500" /> },
-			{ name: 'UI/UX', icon: <SiFigma className="text-purple-500" /> },
+			{ name: 'JavaScript', icon: <FaJsSquare className="text-yellow-400" />, color: '#facc15' },
+			{ name: 'TypeScript', icon: <SiTypescript className="text-blue-500" />, color: '#3b82f6' },
+			{ name: 'React', icon: <FaReact className="text-cyan-400" />, color: '#06b6d4' },
+			{ name: 'Next.js', icon: <SiNextdotjs className="text-gray-800 dark:text-white" />, color: '#111827' },
+			{ name: 'Laravel', icon: <SiLaravel className="text-red-500" />, color: '#ef4444' },
+			{ name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-500" />, color: '#22d3ee' },
+			{ name: 'Node.js', icon: <FaNodeJs className="text-green-500" />, color: '#22c55e' },
+			{ name: 'UI/UX', icon: <SiFigma className="text-purple-500" />, color: '#a21caf' },
 		],
 		[]
 	);
