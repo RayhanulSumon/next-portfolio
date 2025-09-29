@@ -2,12 +2,11 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial } from '@react-three/drei';
-import React, { useRef, useEffect, useState, MouseEvent } from 'react';
+import { MeshDistortMaterial } from '@react-three/drei';
+import React, { useRef, useEffect, useState, MouseEvent, useCallback, useMemo } from 'react';
 import { Mesh, SphereGeometry, Material, MeshStandardMaterial } from 'three';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { motion as motionLink } from 'framer-motion';
 
 interface DistortMaterial extends Material {
   distort: number;
@@ -17,66 +16,118 @@ function Hero3DBackground() {
   // Only render Canvas after hydration
   const [isClient, setIsClient] = useState(false);
   const { resolvedTheme } = useTheme();
+
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Use a ref for scrollY to avoid re-rendering
+  // Use a ref for scrollY to avoid re-rendering - optimized with requestAnimationFrame
   const scrollYRef = useRef(0);
+  const rafId = useRef<number | null>(null);
+
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      scrollYRef.current = window.scrollY;
+      if (!ticking) {
+        rafId.current = requestAnimationFrame(() => {
+          scrollYRef.current = window.scrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId.current !== null) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
   }, []);
 
-  function AnimatedSphere() {
-    const ref = useRef<Mesh<SphereGeometry, Material>>(null);
-    const yPos = useRef(-0.7);
-    useFrame(() => {
-      if (ref.current) {
-        // Set color based on theme
-        const color = isDark ? '#0ea5e9' : '#0284c7';
-        const opacity = isDark ? 0.7 : 0.85;
-        (ref.current.material as DistortMaterial).distort = 0.15 + Math.sin(Date.now() * 0.001) * 0.07;
-        // Type guard for color property
-        const mat = ref.current.material as MeshStandardMaterial;
-        if (mat && mat.color && typeof mat.color.set === 'function') {
-          mat.color.set(color);
+  // Memoize the sphere component for better performance
+  const AnimatedSphere = useMemo(() => {
+    function SphereComponent() {
+      const ref = useRef<Mesh<SphereGeometry, Material>>(null);
+      const yPos = useRef(-0.7);
+      const time = useRef(0);
+
+      useFrame((state, delta) => {
+        if (ref.current) {
+          time.current += delta;
+
+          // Optimize animation calculations
+          const isDark = resolvedTheme === 'dark';
+          const color = isDark ? '#0ea5e9' : '#0284c7';
+          const opacity = isDark ? 0.7 : 0.85;
+
+          // Use time-based animation instead of Date.now() for better performance
+          (ref.current.material as DistortMaterial).distort = 0.15 + Math.sin(time.current * 1000) * 0.07;
+
+          // Type guard for color property
+          const mat = ref.current.material as MeshStandardMaterial;
+          if (mat && mat.color && typeof mat.color.set === 'function') {
+            mat.color.set(color);
+          }
+          if ('opacity' in mat) {
+            mat.opacity = opacity;
+          }
+
+          const minY = -0.7;
+          const maxY = 2.5;
+          const heroHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+          const scrollRatio = typeof window !== 'undefined' ? Math.min(scrollYRef.current / heroHeight, 1) : 0;
+          const targetY = minY + (maxY - minY) * scrollRatio;
+
+          // Smooth interpolation for better performance
+          yPos.current += (targetY - yPos.current) * 0.08;
+          ref.current.position.y = yPos.current;
         }
-        if ('opacity' in mat) {
-          mat.opacity = opacity;
-        }
-        const minY = -0.7; // start at bottom of hero
-        const maxY = 2.5; // move further down as you scroll (increase for more movement)
-        // Use a fallback value for SSR
-        const heroHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
-        const scrollRatio = typeof window !== 'undefined' ? Math.min(scrollYRef.current / heroHeight, 1) : 0;
-        const targetY = minY + (maxY - minY) * scrollRatio;
-        yPos.current += (targetY - yPos.current) * 0.08;
-        ref.current.position.y = yPos.current;
-      }
-    });
-    return (
-      <Sphere ref={ref} args={[0.6, 64, 64]} scale={0.9} position={[0.7, yPos.current, 0]}>
-        <MeshDistortMaterial color={isDark ? '#0ea5e9' : '#0284c7'} speed={1.2} transparent opacity={isDark ? 0.7 : 0.85} />
-      </Sphere>
-    );
-  }
+      });
+
+      return (
+        <mesh ref={ref} scale={0.9} position={[0.7, yPos.current, 0]}>
+          <sphereGeometry args={[0.6, 64, 64]} />
+          <MeshDistortMaterial
+            color={resolvedTheme === 'dark' ? '#0ea5e9' : '#0284c7'}
+            speed={1.2}
+            transparent
+            opacity={resolvedTheme === 'dark' ? 0.7 : 0.85}
+          />
+        </mesh>
+      );
+    }
+    return SphereComponent;
+  }, [resolvedTheme]);
 
   // Only render Canvas on client
   if (!isClient) return null;
 
-  // Adjust background opacity based on theme
+  // Memoize theme-based values
   const isDark = resolvedTheme === 'dark';
   const bgOpacity = isDark ? 0.45 : 0.25;
+  const ambientIntensity = isDark ? 0.7 : 0.5;
+  const directionalIntensity = isDark ? 0.5 : 0.3;
 
   return (
-    <div className="absolute left-0 right-0 top-0 h-screen pointer-events-none" style={{ filter: 'blur(10px)', opacity: bgOpacity }}>
-      <Canvas camera={{ position: [0, 0, 2.5], fov: 50 }} style={{ width: '100%', height: '100%' }}>
-        <ambientLight intensity={isDark ? 0.7 : 0.5} />
-        <directionalLight position={[2, 2, 2]} intensity={isDark ? 0.5 : 0.3} />
+    <div
+      className="absolute left-0 right-0 top-0 h-screen pointer-events-none will-change-transform"
+      style={{
+        filter: 'blur(10px)',
+        opacity: bgOpacity,
+        transform: 'translateZ(0)' // Force hardware acceleration
+      }}
+    >
+      <Canvas
+        camera={{ position: [0, 0, 2.5], fov: 50 }}
+        style={{ width: '100%', height: '100%' }}
+        dpr={[1, 2]} // Limit device pixel ratio for better performance
+        performance={{ min: 0.5 }} // Performance settings
+      >
+        <ambientLight intensity={ambientIntensity} />
+        <directionalLight position={[2, 2, 2]} intensity={directionalIntensity} />
         <AnimatedSphere />
       </Canvas>
     </div>
@@ -91,44 +142,132 @@ export default function HeroSection() {
     }
   }, []);
 
-  // 3D tilt effect state/logic
+  // 3D tilt effect state/logic with performance optimizations
   const tiltRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, scale: 1 });
-  const maxTilt = 45; // increased from 25 for more dramatic effect
+  const isAnimating = useRef(false);
+  const maxTilt = 45;
 
-  function handlePointerMove(e: MouseEvent<HTMLDivElement>) {
-    const node = tiltRef.current;
-    if (!node) return;
-    const rect = node.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const px = x / rect.width;
-    const py = y / rect.height;
-    // Centered at 0,0 with more dramatic tilt
-    const tiltX = (py - 0.5) * -2 * maxTilt;
-    const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.15 }); // increased scale from 1.08 to 1.15
-  }
-  function handlePointerLeave() {
+  // Memoize style calculations for better performance
+  const tiltStyles = useMemo(() => {
+    const tiltIntensity = Math.abs(tilt.x) + Math.abs(tilt.y);
+
+    return {
+      container: {
+        perspective: 2000,
+        transformStyle: 'preserve-3d' as const,
+        transform: `perspective(2000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
+        transition: tilt.scale === 1
+          ? 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+          : 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)',
+        willChange: 'transform',
+        filter: `drop-shadow(${tilt.y * 0.5}px ${tilt.x * 0.5 + 20}px ${20 + tiltIntensity}px rgba(59, 130, 246, ${0.3 + tiltIntensity * 0.01}))`,
+      },
+      layer1: {
+        transform: `translateZ(-10px) scale(${1 + tiltIntensity * 0.001})`,
+        opacity: 0.6 + tiltIntensity * 0.005,
+      },
+      layer2: {
+        transform: `translateZ(-20px) scale(${1 + tiltIntensity * 0.002})`,
+        opacity: 0.4 + tiltIntensity * 0.008,
+      },
+      layer3: {
+        transform: `translateZ(-30px) scale(${1 + tiltIntensity * 0.003})`,
+        opacity: 0.2 + tiltIntensity * 0.01,
+      },
+      imageContainer: {
+        transform: 'translateZ(0)',
+        boxShadow: `
+          0 ${4 + Math.abs(tilt.x) * 0.5}px ${20 + Math.abs(tilt.y) * 0.8}px rgba(0, 0, 0, ${0.1 + tiltIntensity * 0.003}),
+          0 1px 3px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          ${tilt.y * 0.3}px ${tilt.x * 0.3}px ${15 + tiltIntensity}px rgba(59, 130, 246, ${0.2 + tiltIntensity * 0.005})
+        `
+      },
+      lighting: {
+        background: `
+          radial-gradient(
+            circle at ${50 + tilt.y * 0.5}% ${50 - tilt.x * 0.5}%, 
+            rgba(255, 255, 255, ${0.15 + tiltIntensity * 0.002}) 0%, 
+            rgba(255, 255, 255, 0.05) 40%, 
+            rgba(0, 0, 0, ${0.05 + tiltIntensity * 0.001}) 100%
+          )
+        `,
+      },
+      image: {
+        transform: `translateZ(10px) scale(${1 + tiltIntensity * 0.0005})`,
+        filter: `brightness(${1 + tiltIntensity * 0.001}) contrast(${1 + tiltIntensity * 0.0008})`,
+      }
+    };
+  }, [tilt.x, tilt.y, tilt.scale]);
+
+  // Throttled pointer move handler for better performance
+  const handlePointerMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+    requestAnimationFrame(() => {
+      const node = tiltRef.current;
+      if (!node) {
+        isAnimating.current = false;
+        return;
+      }
+
+      const rect = node.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const px = x / rect.width;
+      const py = y / rect.height;
+
+      const tiltX = (py - 0.5) * -2 * maxTilt;
+      const tiltY = (px - 0.5) * 2 * maxTilt;
+
+      setTilt({ x: tiltX, y: tiltY, scale: 1.15 });
+      isAnimating.current = false;
+    });
+  }, [maxTilt]);
+
+  const handlePointerLeave = useCallback(() => {
     setTilt({ x: 0, y: 0, scale: 1 });
-  }
-  function handleTouchMove(e: React.TouchEvent<HTMLDivElement>) {
-    const node = tiltRef.current;
-    if (!node) return;
-    const rect = node.getBoundingClientRect();
-    const touch = e.touches[0];
-    if (!touch) return;
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-    const px = x / rect.width;
-    const py = y / rect.height;
-    const tiltX = (py - 0.5) * -2 * maxTilt;
-    const tiltY = (px - 0.5) * 2 * maxTilt;
-    setTilt({ x: tiltX, y: tiltY, scale: 1.15 }); // increased scale
-  }
-  function handleTouchEnd() {
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+    requestAnimationFrame(() => {
+      const node = tiltRef.current;
+      if (!node) {
+        isAnimating.current = false;
+        return;
+      }
+
+      const rect = node.getBoundingClientRect();
+      const touch = e.touches[0];
+      if (!touch) {
+        isAnimating.current = false;
+        return;
+      }
+
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const px = x / rect.width;
+      const py = y / rect.height;
+
+      const tiltX = (py - 0.5) * -2 * maxTilt;
+      const tiltY = (px - 0.5) * 2 * maxTilt;
+
+      setTilt({ x: tiltX, y: tiltY, scale: 1.15 });
+      isAnimating.current = false;
+    });
+  }, [maxTilt]);
+
+  const handleTouchEnd = useCallback(() => {
     setTilt({ x: 0, y: 0, scale: 1 });
-  }
+  }, []);
+
+  // Memoize tech stack items for performance
+  const techStack = useMemo(() => ['React', 'Next.js', 'TypeScript', 'Laravel', 'Node.js'], []);
 
   return (
     <motion.section
@@ -148,68 +287,35 @@ export default function HeroSection() {
         >
           <motion.div
             ref={tiltRef}
-            className="relative group rounded-3xl p-1 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl"
-            style={{
-              perspective: 2000, // increased perspective for more dramatic 3D effect
-              transformStyle: 'preserve-3d',
-              transform: `perspective(2000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
-              transition: tilt.scale === 1
-                ? 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)' // spring-like return animation
-                : 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)', // smooth hover transition
-              willChange: 'transform',
-              filter: `drop-shadow(${tilt.y * 0.5}px ${tilt.x * 0.5 + 20}px ${20 + Math.abs(tilt.x) + Math.abs(tilt.y)}px rgba(59, 130, 246, ${0.3 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.01}))`,
-            }}
+            className="relative group rounded-3xl p-1 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl will-change-transform"
+            style={tiltStyles.container}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Enhanced 3D layered border effects with depth */}
+            {/* Enhanced 3D layered border effects with depth - optimized */}
             <div
-              className="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-blue-400/30 via-cyan-300/30 to-blue-500/30 dark:from-blue-600/40 dark:via-cyan-500/40 dark:to-blue-700/40 blur-sm group-hover:blur-lg transition-all duration-700"
-              style={{
-                transform: `translateZ(-10px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001})`,
-                opacity: 0.6 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.005,
-              }}
+              className="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-blue-400/30 via-cyan-300/30 to-blue-500/30 dark:from-blue-600/40 dark:via-cyan-500/40 dark:to-blue-700/40 blur-sm group-hover:blur-lg transition-all duration-700 will-change-transform"
+              style={tiltStyles.layer1}
             />
             <div
-              className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-500/20 via-cyan-400/20 to-blue-600/20 dark:from-blue-700/30 dark:via-cyan-600/30 dark:to-blue-800/30 blur-md group-hover:blur-xl transition-all duration-700"
-              style={{
-                transform: `translateZ(-20px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.002})`,
-                opacity: 0.4 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.008,
-              }}
+              className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-500/20 via-cyan-400/20 to-blue-600/20 dark:from-blue-700/30 dark:via-cyan-600/30 dark:to-blue-800/30 blur-md group-hover:blur-xl transition-all duration-700 will-change-transform"
+              style={tiltStyles.layer2}
             />
             <div
-              className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-700/10 dark:from-blue-800/20 dark:via-cyan-700/20 dark:to-blue-900/20 blur-lg group-hover:blur-2xl transition-all duration-700"
-              style={{
-                transform: `translateZ(-30px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.003})`,
-                opacity: 0.2 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.01,
-              }}
+              className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-700/10 dark:from-blue-800/20 dark:via-cyan-700/20 dark:to-blue-900/20 blur-lg group-hover:blur-2xl transition-all duration-700 will-change-transform"
+              style={tiltStyles.layer3}
             />
 
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl relative z-10 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-500"
-                 style={{
-                   transform: 'translateZ(0)',
-                   boxShadow: `
-                     0 ${4 + Math.abs(tilt.x) * 0.5}px ${20 + Math.abs(tilt.y) * 0.8}px rgba(0, 0, 0, ${0.1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.003}),
-                     0 1px 3px rgba(0, 0, 0, 0.08),
-                     inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                     ${tilt.y * 0.3}px ${tilt.x * 0.3}px ${15 + Math.abs(tilt.x) + Math.abs(tilt.y)}px rgba(59, 130, 246, ${0.2 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.005})
-                   `
-                 }}>
-              {/* Dynamic lighting overlay based on tilt */}
+            <div
+              className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl relative z-10 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-500"
+              style={tiltStyles.imageContainer}
+            >
+              {/* Dynamic lighting overlay based on tilt - optimized */}
               <div
                 className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300"
-                style={{
-                  background: `
-                    radial-gradient(
-                      circle at ${50 + tilt.y * 0.5}% ${50 - tilt.x * 0.5}%, 
-                      rgba(255, 255, 255, ${0.15 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.002}) 0%, 
-                      rgba(255, 255, 255, 0.05) 40%, 
-                      rgba(0, 0, 0, ${0.05 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001}) 100%
-                    )
-                  `,
-                }}
+                style={tiltStyles.lighting}
               />
               <Image
                 src="/images/hero/sumon.webp"
@@ -217,11 +323,9 @@ export default function HeroSection() {
                 width={400}
                 height={400}
                 className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-all duration-500 group-hover:scale-110 relative z-10"
-                style={{
-                  transform: `translateZ(10px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.0005})`,
-                  filter: `brightness(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001}) contrast(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.0008})`,
-                }}
+                style={tiltStyles.image}
                 priority
+                loading="eager"
               />
             </div>
           </motion.div>
@@ -323,7 +427,7 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Tech stack preview */}
+          {/* Tech stack preview - optimized */}
           <motion.div
             className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-8"
             initial={{ opacity: 0 }}
@@ -331,7 +435,7 @@ export default function HeroSection() {
             transition={{ delay: 1.6, duration: 0.5 }}
           >
             <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Tech Stack:</span>
-            {['React', 'Next.js', 'TypeScript', 'Laravel', 'Node.js'].map((tech, idx) => (
+            {techStack.map((tech, idx) => (
               <motion.span
                 key={tech}
                 className="px-4 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
