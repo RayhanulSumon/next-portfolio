@@ -39,46 +39,37 @@ export default function Navigation() {
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
-
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > navHeight);
-      if (currentScrollY > lastScrollY && currentScrollY > navHeight) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
+      setScrollDirection(currentScrollY > lastScrollY && currentScrollY > navHeight ? 'down' : 'up');
       lastScrollY = currentScrollY;
       ticking = false;
     };
-
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(handleScroll);
         ticking = true;
       }
     };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove);
-
     return () => {
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [navHeight]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
