@@ -55,7 +55,7 @@ const Skills3DBackground = React.memo(function Skills3DBackground() {
 	);
 });
 
-function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; color: string } }) {
+function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; color: string; darkColor: string } }) {
 	return (
 		<motion.div
 			className={`flex flex-col items-center rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 relative overflow-hidden group bg-white/70 dark:bg-slate-900/70 border-[${skill.color}]`}
@@ -72,7 +72,7 @@ function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; co
 				{skill.icon}
 				<span className={`absolute inset-0 rounded-full blur-xl opacity-30 group-hover:opacity-50`} style={{ background: skill.color }} />
 			</span>
-			<span className={`font-bold text-lg md:text-xl text-center tracking-wide`} style={{ color: skill.color }}>
+			<span className={`font-bold text-lg md:text-xl text-center tracking-wide dark:text-[${skill.darkColor}]`} style={{ color: skill.color }}>
 				{skill.name}
 			</span>
 			<span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-2/3 h-1 rounded-full opacity-70 group-hover:opacity-100 transition-all duration-200" style={{ background: `linear-gradient(90deg, ${skill.color} 0%, #fff 100%)` }} />
@@ -83,14 +83,14 @@ function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode; co
 export default function SkillsSection() {
 	const skills = React.useMemo(
 		() => [
-			{ name: 'JavaScript', icon: <FaJsSquare className="text-yellow-400" />, color: '#facc15' },
-			{ name: 'TypeScript', icon: <SiTypescript className="text-blue-500" />, color: '#3b82f6' },
-			{ name: 'React', icon: <FaReact className="text-cyan-400" />, color: '#06b6d4' },
-			{ name: 'Next.js', icon: <SiNextdotjs className="text-gray-800 dark:text-white" />, color: '#111827' },
-			{ name: 'Laravel', icon: <SiLaravel className="text-red-500" />, color: '#ef4444' },
-			{ name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-500" />, color: '#22d3ee' },
-			{ name: 'Node.js', icon: <FaNodeJs className="text-green-500" />, color: '#22c55e' },
-			{ name: 'UI/UX', icon: <SiFigma className="text-purple-500" />, color: '#a21caf' },
+			{ name: 'JavaScript', icon: <FaJsSquare className="text-yellow-400" />, color: '#facc15', darkColor: '#fde68a' },
+			{ name: 'TypeScript', icon: <SiTypescript className="text-blue-500" />, color: '#3b82f6', darkColor: '#60a5fa' },
+			{ name: 'React', icon: <FaReact className="text-cyan-400" />, color: '#06b6d4', darkColor: '#67e8f9' },
+			{ name: 'Next.js', icon: <SiNextdotjs className="text-gray-800 dark:text-white" />, color: '#111827', darkColor: '#fff' },
+			{ name: 'Laravel', icon: <SiLaravel className="text-red-500" />, color: '#ef4444', darkColor: '#f87171' },
+			{ name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-500" />, color: '#22d3ee', darkColor: '#67e8f9' },
+			{ name: 'Node.js', icon: <FaNodeJs className="text-green-500" />, color: '#22c55e', darkColor: '#4ade80' },
+			{ name: 'UI/UX', icon: <SiFigma className="text-purple-500" />, color: '#a21caf', darkColor: '#c4b5fd' },
 		],
 		[]
 	);
