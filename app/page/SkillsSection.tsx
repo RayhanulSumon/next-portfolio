@@ -58,7 +58,7 @@ const Skills3DBackground = React.memo(function Skills3DBackground() {
 function SkillCard({ skill }: { skill: { name: string; icon: React.ReactNode } }) {
 	return (
 		<motion.div
-			className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 border-sky-200 dark:border-fuchsia-800 relative overflow-hidden group"
+			className="flex flex-col items-center bg-white/60 dark:bg-slate-900/60 rounded-3xl shadow-2xl p-8 backdrop-blur-xl border-2 border-slate-200 dark:border-slate-700 relative overflow-hidden group"
 			variants={cardVariants}
 			style={{ willChange: 'transform' }}
 			whileHover={{
