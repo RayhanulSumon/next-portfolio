@@ -7,6 +7,7 @@ import React, { useRef, useEffect, useState, MouseEvent, useCallback, useMemo } 
 import { Mesh, SphereGeometry, Material, MeshStandardMaterial } from 'three';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { Button } from "@/components/ui/button";
 
 interface DistortMaterial extends Material {
   distort: number;
@@ -278,7 +279,7 @@ export default function HeroSection() {
       transition={{ duration: 0.8 }}
     >
       <Hero3DBackground />
-      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10 mt-8 md:mt-0">
+      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16 relative z-10 mt-4 md:mt-0">
         <motion.div
           className="flex-shrink-0 flex justify-center items-center w-full lg:w-auto order-1 lg:order-1"
           initial={{ opacity: 0, x: -50 }}
@@ -391,40 +392,31 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 0.5 }}
           >
-            <motion.div
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="group relative"
+            <Button
+              asChild
+              size="lg"
+              className="w-full sm:w-auto text-base px-4 py-2 md:text-lg md:px-6 md:py-4"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-              <div className="relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
-                <Link href="/contact" className="flex items-center justify-center gap-3">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  Let&apos;s Talk
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="group relative"
+              <Link href="/contact" className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                Let&apos;s Talk
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto text-base px-4 py-2 md:text-lg md:px-6 md:py-4"
             >
-              <motion.a
-                href="/images/cv.webp"
-                download
-                className="relative flex items-center justify-center gap-3 px-8 py-4 bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 rounded-xl font-bold text-lg border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-cyan-400 shadow-lg hover:shadow-xl backdrop-blur-sm transition-all duration-200"
-              >
+              <a href="/images/cv.webp" download className="flex items-center justify-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Download CV
-              </motion.a>
-            </motion.div>
+              </a>
+            </Button>
           </motion.div>
 
           {/* Tech stack preview - optimized */}
