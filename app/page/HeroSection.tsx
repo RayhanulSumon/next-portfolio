@@ -284,16 +284,16 @@ export default function HeroSection() {
 
           {/* Tech stack preview */}
           <motion.div
-            className="flex flex-wrap justify-center lg:justify-start gap-3 mt-8"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.6, duration: 0.5 }}
           >
-            <span className="text-sm text-gray-500 dark:text-gray-400 mr-2">Tech Stack:</span>
+            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Tech Stack:</span>
             {['React', 'Next.js', 'TypeScript', 'Laravel', 'Node.js'].map((tech, idx) => (
               <motion.span
                 key={tech}
-                className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700"
+                className="px-4 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.8 + idx * 0.1 }}
