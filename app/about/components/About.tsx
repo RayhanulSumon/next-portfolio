@@ -11,7 +11,7 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="pt-20 pb-24 relative overflow-hidden">
+      <section className="pt-14 pb-24 relative overflow-hidden">
         {/* Animated Background SVGs */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <svg className="absolute top-0 left-0 w-96 h-96 opacity-30 blur-2xl text-blue-300 dark:text-blue-900 animate-pulse" fill="currentColor" viewBox="0 0 400 400">
