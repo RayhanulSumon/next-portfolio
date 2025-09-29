@@ -57,6 +57,12 @@ const cardVariants = {
 	},
 };
 
+const accentColors = [
+  'from-blue-400 to-cyan-400',
+  'from-indigo-500 to-purple-400',
+  'from-fuchsia-500 to-pink-400',
+];
+
 export default function FeaturedProjectsSection() {
 	const { resolvedTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
@@ -80,32 +86,40 @@ export default function FeaturedProjectsSection() {
 				>
 					{featuredProjects.map((project, idx) => {
 						const imageSrc = mounted && resolvedTheme === "dark" ? project.imageDark : project.imageLight;
-
+						const accent = accentColors[idx % accentColors.length];
 						return (
 							<motion.div
 								key={idx}
 								variants={cardVariants}
-								className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-xl overflow-hidden flex flex-col min-h-[480px] border border-gray-200 dark:border-gray-800"
+								className={`relative rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[480px] border-0 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl group transition-all duration-200 hover:scale-[1.03] hover:shadow-3xl`}
 								style={{ willChange: 'transform' }}
 								whileHover={{
-									y: -8,
+									y: -10,
+									scale: 1.03,
+									boxShadow: '0 8px 40px 0 rgba(56,189,248,0.15)',
 									transition: { duration: 0.2 }
 								}}
 							>
-								<Image
-									src={imageSrc}
-									alt={project.title}
-									width={600}
-									height={300}
-									className="h-64 w-full object-cover"
-									unoptimized
-									priority={idx === 0}
-								/>
+								{/* Accent bar */}
+								<span className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${accent} opacity-70 group-hover:opacity-100 transition-all duration-200`} />
+								{/* Project Image */}
+								<div className="relative w-full h-64">
+									<Image
+										src={imageSrc}
+										alt={project.title}
+										fill
+										sizes="(max-width: 768px) 100vw, 33vw"
+										className="object-cover rounded-t-3xl"
+										priority={idx === 0}
+                                        unoptimized={true}
+									/>
+								</div>
+								{/* Card Content */}
 								<div className="p-6 flex-1 flex flex-col">
-									<h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+									<h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white flex items-center gap-2">
 										{project.title}
 									</h3>
-									<p className="text-gray-700 dark:text-gray-300 mb-4 flex-1">
+									<p className="text-gray-700 dark:text-gray-300 mb-4 flex-1 text-base">
 										{project.description}
 									</p>
 									<div className="mt-auto flex gap-3">
@@ -113,13 +127,13 @@ export default function FeaturedProjectsSection() {
 											href={project.link}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="inline-block text-blue-600 dark:text-blue-400 font-medium hover:underline border border-blue-600 dark:border-blue-400 rounded px-4 py-2 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/30"
+											className="inline-block font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-500 dark:from-blue-700 dark:to-cyan-700 px-4 py-2 rounded-lg shadow hover:scale-105 hover:shadow-lg transition-all duration-150"
 										>
 											View Live
 										</Link>
 										<Link
 											href={`/portfolio/${project.slug}`}
-											className="inline-block text-gray-700 dark:text-gray-200 font-medium hover:underline border border-gray-400 dark:border-gray-700 rounded px-4 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+											className="inline-block font-semibold text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg shadow hover:scale-105 hover:shadow-lg transition-all duration-150 border border-gray-300 dark:border-gray-700"
 										>
 											View Details
 										</Link>
