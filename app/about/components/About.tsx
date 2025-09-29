@@ -14,10 +14,11 @@ const About: React.FC = () => {
       <section className="pt-14 pb-24 relative overflow-hidden">
         {/* Animated Background SVGs */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <svg className="absolute top-0 left-0 w-96 h-96 opacity-30 blur-2xl text-blue-300 dark:text-blue-900 animate-pulse" fill="currentColor" viewBox="0 0 400 400">
+          {/* Light/Dark mode SVG backgrounds with improved contrast */}
+          <svg className="absolute top-0 left-0 w-96 h-96 opacity-20 blur-2xl text-blue-200 dark:text-blue-900 animate-pulse" fill="currentColor" viewBox="0 0 400 400">
             <circle cx="200" cy="200" r="200" />
           </svg>
-          <svg className="absolute bottom-0 right-0 w-[32rem] h-[32rem] opacity-30 blur-2xl text-cyan-200 dark:text-cyan-900 animate-pulse" fill="currentColor" viewBox="0 0 400 400">
+          <svg className="absolute bottom-0 right-0 w-[32rem] h-[32rem] opacity-15 blur-2xl text-cyan-100 dark:text-cyan-900 animate-pulse" fill="currentColor" viewBox="0 0 400 400">
             <circle cx="200" cy="200" r="200" />
           </svg>
         </div>
