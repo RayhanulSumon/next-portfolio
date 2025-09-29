@@ -160,19 +160,8 @@ export default function HeroSection() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Enhanced animated ring effect */}
-            <motion.span
-              className="absolute -inset-1 rounded-3xl z-0 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 blur-lg opacity-30 group-hover:opacity-60 group-hover:blur-xl transition-all duration-300"
-              animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.3, 0.5, 0.3]
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+            {/* Color-changing border using existing hero-ring animation */}
+            <span className="absolute -inset-0.5 rounded-3xl z-0 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-700 dark:from-blue-900 dark:via-cyan-800 dark:to-blue-950 blur-sm opacity-30 group-hover:opacity-50 animate-hero-ring group-hover:animate-hero-ring-fast transition-opacity duration-200" />
             <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl border-3 border-white/80 dark:border-slate-800/80 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-300 relative z-10">
               <Image
                 src="/images/hero/sumon.webp"
