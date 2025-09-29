@@ -32,7 +32,7 @@ const sectionGradient =
 function SectionDivider() {
 	return (
 		<svg className="absolute top-0 left-0 w-full h-16 -translate-y-full" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path fill="currentColor" className="text-sky-100 dark:text-slate-800" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z" />
+			<path fill="currentColor" className="text-sky-100 opacity-80 dark:text-slate-950 dark:opacity-20" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z" />
 		</svg>
 	);
 }
