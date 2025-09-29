@@ -150,35 +150,77 @@ export default function HeroSection() {
             ref={tiltRef}
             className="relative group rounded-3xl p-1 bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 dark:from-blue-800 dark:via-cyan-700 dark:to-blue-900 shadow-2xl"
             style={{
-              perspective: 1000,
-              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
-              transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              perspective: 2000, // increased perspective for more dramatic 3D effect
+              transformStyle: 'preserve-3d',
+              transform: `perspective(2000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${tilt.scale})`,
+              transition: tilt.scale === 1
+                ? 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)' // spring-like return animation
+                : 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)', // smooth hover transition
               willChange: 'transform',
+              filter: `drop-shadow(${tilt.y * 0.5}px ${tilt.x * 0.5 + 20}px ${20 + Math.abs(tilt.x) + Math.abs(tilt.y)}px rgba(59, 130, 246, ${0.3 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.01}))`,
             }}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* 3D layered border effect */}
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-blue-400/20 via-cyan-300/20 to-blue-500/20 dark:from-blue-600/30 dark:via-cyan-500/30 dark:to-blue-700/30 blur-sm group-hover:blur-md transition-all duration-500" />
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-500/10 via-cyan-400/10 to-blue-600/10 dark:from-blue-700/20 dark:via-cyan-600/20 dark:to-blue-800/20 blur-md group-hover:blur-lg transition-all duration-500" />
+            {/* Enhanced 3D layered border effects with depth */}
+            <div
+              className="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-blue-400/30 via-cyan-300/30 to-blue-500/30 dark:from-blue-600/40 dark:via-cyan-500/40 dark:to-blue-700/40 blur-sm group-hover:blur-lg transition-all duration-700"
+              style={{
+                transform: `translateZ(-10px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001})`,
+                opacity: 0.6 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.005,
+              }}
+            />
+            <div
+              className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-blue-500/20 via-cyan-400/20 to-blue-600/20 dark:from-blue-700/30 dark:via-cyan-600/30 dark:to-blue-800/30 blur-md group-hover:blur-xl transition-all duration-700"
+              style={{
+                transform: `translateZ(-20px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.002})`,
+                opacity: 0.4 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.008,
+              }}
+            />
+            <div
+              className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-blue-600/10 via-cyan-500/10 to-blue-700/10 dark:from-blue-800/20 dark:via-cyan-700/20 dark:to-blue-900/20 blur-lg group-hover:blur-2xl transition-all duration-700"
+              style={{
+                transform: `translateZ(-30px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.003})`,
+                opacity: 0.2 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.01,
+              }}
+            />
 
-            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl relative z-10 group-hover:shadow-blue-500/20 dark:group-hover:shadow-cyan-400/20 transition-all duration-500"
+            <div className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-2xl relative z-10 group-hover:shadow-blue-500/30 dark:group-hover:shadow-cyan-400/30 transition-all duration-500"
                  style={{
+                   transform: 'translateZ(0)',
                    boxShadow: `
-                     0 4px 20px rgba(0, 0, 0, 0.1),
+                     0 ${4 + Math.abs(tilt.x) * 0.5}px ${20 + Math.abs(tilt.y) * 0.8}px rgba(0, 0, 0, ${0.1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.003}),
                      0 1px 3px rgba(0, 0, 0, 0.08),
-                     inset 0 1px 0 rgba(255, 255, 255, 0.1)
+                     inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                     ${tilt.y * 0.3}px ${tilt.x * 0.3}px ${15 + Math.abs(tilt.x) + Math.abs(tilt.y)}px rgba(59, 130, 246, ${0.2 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.005})
                    `
                  }}>
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-black/5 dark:from-white/5 dark:via-transparent dark:to-black/10 pointer-events-none" />
+              {/* Dynamic lighting overlay based on tilt */}
+              <div
+                className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-300"
+                style={{
+                  background: `
+                    radial-gradient(
+                      circle at ${50 + tilt.y * 0.5}% ${50 - tilt.x * 0.5}%, 
+                      rgba(255, 255, 255, ${0.15 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.002}) 0%, 
+                      rgba(255, 255, 255, 0.05) 40%, 
+                      rgba(0, 0, 0, ${0.05 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001}) 100%
+                    )
+                  `,
+                }}
+              />
               <Image
                 src="/images/hero/sumon.webp"
                 alt="Rayhanul Sumon"
                 width={400}
                 height={400}
-                className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform duration-300 group-hover:scale-105 relative z-10"
+                className="object-cover w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-all duration-500 group-hover:scale-110 relative z-10"
+                style={{
+                  transform: `translateZ(10px) scale(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.0005})`,
+                  filter: `brightness(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.001}) contrast(${1 + (Math.abs(tilt.x) + Math.abs(tilt.y)) * 0.0008})`,
+                }}
                 priority
               />
             </div>
