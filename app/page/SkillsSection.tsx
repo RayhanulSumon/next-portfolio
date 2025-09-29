@@ -32,7 +32,7 @@ const sectionGradient =
 function SectionDivider() {
 	return (
 		<svg className="absolute top-0 left-0 w-full h-16 -translate-y-full" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path fill="currentColor" className="text-sky-100 opacity-80 dark:text-slate-950 dark:opacity-20" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z" />
+			<path fill="currentColor" className="text-slate-950 dark:text-slate-800 dark:opacity-40" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z" />
 		</svg>
 	);
 }
@@ -92,7 +92,7 @@ export default function SkillsSection() {
 	return (
 		<motion.section
 			id="skills"
-			className={`relative py-24 flex items-center justify-center min-h-[65vh] ${sectionGradient} overflow-hidden border-t-4 border-slate-300 dark:border-slate-800`}
+			className={`relative py-24 flex items-center justify-center min-h-[65vh] ${sectionGradient} overflow-hidden border-t-4 border-slate-200 dark:border-slate-900`}
 			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
