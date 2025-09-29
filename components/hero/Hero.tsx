@@ -26,6 +26,7 @@ const heroContent: HeroContent = {
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [desktopImgLoaded, setDesktopImgLoaded] = useState(false);
 
   function toggleModalOne() {
     setIsOpen(!isOpen);
@@ -34,21 +35,31 @@ const Hero: React.FC = () => {
   return (
     <>
       <div className="row home-details-container align-items-center">
-        <div
-          className="col-lg-4 bg position-fixed d-none d-lg-block"
-          style={{
-            backgroundImage: `url(${heroContent.heroImage})`,
-          }}
-        />
+        <div className="col-lg-4 d-none d-lg-flex justify-content-center align-items-center position-fixed" style={{height: '100vh'}}>
+          <Image
+            src={heroContent.heroImage}
+            alt="hero man desktop"
+            width={400}
+            height={400}
+            className="img-fluid main-img-desktop"
+            priority
+            placeholder="blur"
+            blurDataURL="/images/hero/sumon-mobile.webp" // fallback blur
+            onLoadingComplete={() => setDesktopImgLoaded(true)}
+            style={{transition: 'opacity 0.5s', opacity: desktopImgLoaded ? 1 : 0}}
+          />
+        </div>
         <div className="col-12 col-lg-8 offset-lg-4 home-details text-center text-lg-start">
           <div>
             <Image
               src={heroContent.heroMobileImage}
-              alt="hero man"
+              alt="hero man mobile"
               width={400}
               height={400}
               className="img-fluid main-img-mobile d-sm-block d-lg-none"
               priority
+              placeholder="blur"
+              blurDataURL="/images/hero/sumon-mobile.webp"
             />
             <h1 className="text-uppercase poppins-font">
               I&apos;m {heroContent.heroTitleName}.
